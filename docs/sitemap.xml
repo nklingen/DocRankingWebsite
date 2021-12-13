@@ -2,9 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nklingen.github.io/DocRankingWebsite/docs/model/</loc>
+    <loc>https://nklingen.github.io/DocRankingWebsite/docs/intro/</loc>
   </url><url>
     <loc>https://nklingen.github.io/DocRankingWebsite/docs/barlow/</loc>
+  </url><url>
+    <loc>https://nklingen.github.io/DocRankingWebsite/docs/bert/</loc>
+  </url><url>
+    <loc>https://nklingen.github.io/DocRankingWebsite/docs/model/</loc>
+  </url><url>
+    <loc>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</loc>
+  </url><url>
+    <loc>https://nklingen.github.io/DocRankingWebsite/docs/discussion/</loc>
   </url><url>
     <loc>https://nklingen.github.io/DocRankingWebsite/docs/</loc>
   </url><url>

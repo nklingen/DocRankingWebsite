@@ -23,3 +23,5 @@ target="static/fonts"
 source="source/stylesheets"
 target="assets/scss/slate"
 
+[markup.goldmark.renderer]
+    unsafe = true

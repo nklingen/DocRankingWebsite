@@ -2,7 +2,7 @@ theme = "docuapi"
 themesdir = "themes/"
 languageCode = "en-us"
 baseurl = "https://nklingen.github.io/DocRankingWebsite/"
-title = "DocuAPI Example Site"
+title = "Handover Document"
 publishDir = "docs"
 
 disableKinds = ["taxonomyTerm"]

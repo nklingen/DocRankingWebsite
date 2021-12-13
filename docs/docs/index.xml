@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Docs on DocuAPI Example Site</title>
+    <title>Docs on Handover Document</title>
     <link>https://nklingen.github.io/DocRankingWebsite/docs/</link>
-    <description>Recent content in Docs on DocuAPI Example Site</description>
+    <description>Recent content in Docs on Handover Document</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://nklingen.github.io/DocRankingWebsite/docs/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Model</title>
-      <link>https://nklingen.github.io/DocRankingWebsite/docs/model/</link>
+      <title>Intro</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/intro/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://nklingen.github.io/DocRankingWebsite/docs/model/</guid>
-      <description>Model Pre-training Model
-  BERT
-  Barlow Head
-    Training Model
-  Pre-training Model
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Bert &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Barlow Head
-  Ranking Head
-   To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.</description>
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/intro/</guid>
+      <description> IntroIntroduction / Motivation  </description>
     </item>
     
     <item>
@@ -28,7 +21,51 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/barlow/</guid>
-      <description>Barlow# f: encoder network # lambda: weight on the off-diagonal terms # N: batch size # D: dimensionality of the embeddings # # mm: matrix-matrix multiplication # off_diagonal: off-diagonal elements of a matrix # eye: identity matrix for x in loader: # load a batch with N samples # two randomly augmented versions of x y_a, y_b = augment(x) # compute embeddings z_a = f(y_a) # NxD z_b = f(y_b) # NxD # normalize repr.</description>
+      <description>BarlowNat finish  # f: encoder network # lambda: weight on the off-diagonal terms # N: batch size # D: dimensionality of the embeddings # # mm: matrix-matrix multiplication # off_diagonal: off-diagonal elements of a matrix # eye: identity matrix for x in loader: # load a batch with N samples # two randomly augmented versions of x y_a, y_b = augment(x) # compute embeddings z_a = f(y_a) # NxD z_b = f(y_b) # NxD # normalize repr.</description>
+    </item>
+    
+    <item>
+      <title>BERT</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/bert/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/bert/</guid>
+      <description> BERTNat : Brief section on how BERT was implemented  </description>
+    </item>
+    
+    <item>
+      <title>Model</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/model/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/model/</guid>
+      <description>Model The two models are outlined below, where red indicates sub-models with frozen parameters and where blue indicates sub-models with trainable parameters.
+  Pre-training Model
+  BERT
+  Barlow Head
+    Training Model
+  Pre-training Model
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Bert &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Barlow Head
+  Ranking Head
+   To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results.</description>
+    </item>
+    
+    <item>
+      <title>Timeline</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</guid>
+      <description> TimelineMikkel&#39;s portion on what we tried </description>
+    </item>
+    
+    <item>
+      <title>Discussion</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/discussion/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/discussion/</guid>
+      <description> DiscussionNat \ Mikkel  </description>
     </item>
     
   </channel>

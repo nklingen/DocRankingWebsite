@@ -7,6 +7,10 @@ mathjax: true
 
 # Barlow
 
+<aside class="notice">
+Nat finish
+</aside>
+
 ```python
 # f: encoder network
 # lambda: weight on the off-diagonal terms
@@ -50,8 +54,7 @@ Their architecture is as follows (simplified explanation):
 
 The Barlow Loss objective function compares the cross correlation between the embeddings of the distorted images with the identity matrix, essentially pushing them to be similar. 
 
-
-$$L_{BT}\triangleq \sum_i(1-C_{ii})^2 + \lambda \sum_i \sum_{j \neq i}(C_{ij})^2$$
+(Image)[Eq1.png]
 
 
 where the first term is the `invariance term` and the second term is the `redundancy reduction term`
