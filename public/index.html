@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+  <head>
+	<meta name="generator" content="Hugo 0.89.4" />
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>
+      DocuAPI Example Site
+    </title>
+    
+
+
+
+
+
+
+
+
+<link href='/styles/screen.min.3cfaf877873801d20836e07f7d60c446e1a81bbe338985c65355362c37f116b2.css' rel="stylesheet" media="screen" integrity="sha256-PPr4d4c4AdIINuB/fWDERuGoG74ziYXGU1U2LDfxFrI=" />
+<link href='/styles/print.min.9c7d3c118c66de77e439d080b5fd628d6a5ed904dcaccf395285fffb0d97feb6.css' rel="stylesheet" media="print" integrity="sha256-nH08EYxm3nfkOdCAtf1ijWpe2QTcrM85UoX/&#43;w2X/rY=" />
+
+
+    
+
+
+
+
+  
+
+<script src="/js/index.e4619e460f1bf032b63c9e8bf4c022ec118c03648d58c61e6a8402ae9e194017.js" integrity="sha256-5GGeRg8b8DK2PJ6L9MAi7BGMA2SNWMYeaoQCrp4ZQBc=" defer></script>
+
+    
+    <style>
+      [x-cloak] {
+      display: none !important;
+      }
+    </style>
+  </head>
+  <body class="index" x-data="{ navOpen: false }" x-cloak>
+    <a href="#" id="nav-button" @click="navOpen = !navOpen" :class="{'open': navOpen }">
+      <span>
+        NAV
+        <img src='/images/navbar.png'/>
+      </span>
+    </a>
+    <div class="toc-wrapper" :class="{'open': navOpen }">
+      
+       <img src='/images/logo.png' class="logo" />
+      
+        <div class="search" x-data="searchController">
+          <input x-model.debounce.100ms="query" type="search" class="search" id="input-search" placeholder='Search'>
+          <ul class="search-results visible" x-show="results.length > 0" x-transition.duration.700ms >
+            <template x-for="item in results">
+              <li>
+                <a x-text="item.title"></a>
+              </li>
+            </template>
+          </ul>
+        </div>
+      
+      
+  
+  
+    
+  
+  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;p-stylefont-familymurofont-weightboldfont-size35pxmargin10px-0px-10px-0pxcolordodgerbluemodelp&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;\u003cp style=\&#34;font-family:Muro;font-weight:bold;font-size:35px;margin:10px 0px 10px 0px;color:dodgerblue\&#34;\u003eModel\u003c/p\u003e&#34;},{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;},{&#34;id&#34;:&#34;introduction&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Introduction&#34;},{&#34;id&#34;:&#34;authentication&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Authentication&#34;},{&#34;id&#34;:&#34;kittens&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;get-all-kittens&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;http-request&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;HTTP Request&#34;},{&#34;id&#34;:&#34;query-parameters&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Query Parameters&#34;}],&#34;title&#34;:&#34;Get All Kittens&#34;},{&#34;id&#34;:&#34;get-a-specific-kitten&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;http-request-1&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;HTTP Request&#34;},{&#34;id&#34;:&#34;url-parameters&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;URL Parameters&#34;}],&#34;title&#34;:&#34;Get a Specific Kitten&#34;}],&#34;title&#34;:&#34;Kittens&#34;},{&#34;id&#34;:&#34;errors&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;4xx&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;4xx&#34;},{&#34;id&#34;:&#34;5xx&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;5xx&#34;}],&#34;title&#34;:&#34;Errors&#34;}])" @scroll.window="onScroll()">
+    
+    <template x-for="row in rows">
+      <li>
+        <a x-text="row.title" @click="click(row)" :href="`#${row.id}`" class="toc-link" x-bind="rowClass(row)"></a>
+        
+          <ul x-show="row.open" x-bind="transitions()" class="da-toc-list-h2">
+            <template x-for="row in row.sub">
+              <li>
+                <a x-text="row.title" @click="click(row)" :href="`#${row.id}`" class="toc-link" x-bind="rowClass(row)"></a>
+                
+                  <ul x-show="row.open" x-bind="transitions()" class="toc-list-h3">
+                    <template x-for="row in row.sub">
+                      <li>
+                        <a  x-text="row.title" @click="click(row)" :href="`#${row.id}`"  class="toc-link" x-bind="rowClass(row)"></a>
+                      </li>
+                    </template>
+                  </ul>
+                
+              </li>
+            </template>
+          </ul>
+        
+      </li>
+    </template>
+  </ul>
+
+      
+        <ul class="toc-footer">
+          <li class="toc-h1">
+            Translation
+          </li>
+          
+<ul>
+    
+        <li class="toc-h2"><a href="https://docuapi.netlify.com/nn/">Nynorsk</a></li>
+    
+</ul>
+
+
+        </ul>
+      
+      
+        <ul class="toc-footer">
+          
+            <li>
+              <a href='#'>Sign Up for a Developer Key</a>
+            </li>
+          
+            <li>
+              Documentation Powered by <a href="https://github.com/bep/docuapi">DocuAPI</a>
+            </li>
+          
+            <li>
+              Hugo Theme by <a href="https://github.com/bep">bep</a>
+            </li>
+          
+        </ul>
+      
+      
+
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  
+    
+
+
+
+
+
+<h1 id="p-stylefont-familymurofont-weightboldfont-size35pxmargin10px-0px-10px-0pxcolordodgerbluemodelp"><p style="font-family:Muro;font-weight:bold;font-size:35px;margin:10px 0px 10px 0px;color:dodgerblue">Model</p></h1><p>The following section will discuss how the pre-training and training models are constructed.</p>
+<p>To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly. Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head <em>without unlearning</em> the embeddings from the pretraining.</p>
+<hr>
+<p>The two Models are demonstrated below, where <a style="color:tomato">red</a> indicates sub-models with frozen parameters and where <a style="color:dodgerblue">blue</a> indicates sub-models with trainable parameters.</p>
+<blockquote>
+<p><strong>Pre-training Model</strong>
+&raquo; <p style="color:tomato"> BERT</p>
+&raquo; <p style="color:dodgerblue"> Barlow Head</p></p>
+</blockquote>
+<blockquote>
+<p><strong>Training Model</strong>
+&raquo; <p style="color:tomato"> Pre-training Model</p>
+&raquo; <p style="color:tomato">      Bert<p>
+&raquo; <p style="color:tomato">      Barlow Head</p>
+&raquo; <p style="color:dodgerblue"> Ranking Head</p></p>
+</blockquote>
+<hr>
+
+
+
+
+  
+
+
+
+<h1 id="bert-base">BERT Base</h1><p>To delve further into the code, the BERT base simply passes the <code>input_id</code> and <code>attention_masks</code> from the Bert tokeniser through the Danish BERT model, downloaded from <a href="https://huggingface.co/Maltehb/danish-bert-botxo/blob/main/README.md">Hugging Face</a>.</p>
+<p>We made an initial choice to only train the head (for time and complexity reasons), therefore in <code>init</code> we freeze all BERT paramters so they will never be updated.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BERT</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+
+        super(BERT, self)<span style="color:#f92672">.</span>__init__()
+        <span style="color:#75715e"># Reference: https://huggingface.co/Maltehb/danish-bert-botxo/blob/main/README.md</span>
+        self<span style="color:#f92672">.</span>bert <span style="color:#f92672">=</span> AutoModel<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;Maltehb/danish-bert-botxo&#34;</span>)
+
+        <span style="color:#75715e"># freeze all the parameters in BERT. This prevents updating of model weights during fine-tuning</span>
+        <span style="color:#66d9ef">for</span> param <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>bert<span style="color:#f92672">.</span>parameters():
+            param<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+
+
+    <span style="color:#75715e"># define the forward pass</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input_id, mask):
+
+        <span style="color:#75715e"># Bert</span>
+        BERT_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bert(input_id, attention_mask<span style="color:#f92672">=</span>mask)
+
+        <span style="color:#66d9ef">return</span> BERT_output
+</code></pre></div>
+
+
+
+  
+
+
+
+<h1 id="barlow-head">Barlow Head</h1><p>The goal of this model is to push together question and conversation encodings.</p>
+<p>We apply the following steps:</p>
+<ol>
+<li>capture the CLS token from the BERT output.</li>
+<li>Pass through a fully connected layer with batch normalisation</li>
+<li>Apply a ReLU activation function</li>
+<li>Apply Dropout</li>
+<li>Pass through a second fully connected layer with batch normalisation</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">barlow_HEAD</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+        super(barlow_HEAD, self)<span style="color:#f92672">.</span>__init__()
+        <span style="color:#75715e"># dropout layer</span>
+        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(config<span style="color:#f92672">.</span>dropout)
+        <span style="color:#75715e"># relu activation function</span>
+        self<span style="color:#f92672">.</span>relu <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>ReLU()
+        <span style="color:#75715e"># dense layer 1</span>
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">768</span>, <span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># dense layer 2 (Output layer)</span>
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">768</span>, <span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># batch norm fc1</span>
+        self<span style="color:#f92672">.</span>bn1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm1d(<span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># batch norm fc2</span>
+        self<span style="color:#f92672">.</span>bn2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm1d(<span style="color:#ae81ff">768</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, BERT_output):
+
+        <span style="color:#75715e"># capture cls</span>
+        cls <span style="color:#f92672">=</span> BERT_output<span style="color:#f92672">.</span>last_hidden_state[:, <span style="color:#ae81ff">0</span>, :]
+        <span style="color:#75715e"># FC 1 + batch norm</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn1(self<span style="color:#f92672">.</span>fc1(cls))
+        <span style="color:#75715e"># relu activatiom</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>relu(x)
+        <span style="color:#75715e"># dropout</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>dropout(x)
+        <span style="color:#75715e"># FC 2 + batch norm</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn2(self<span style="color:#f92672">.</span>fc2(x))
+
+        <span style="color:#66d9ef">return</span> x
+</code></pre></div>
+
+
+
+  
+
+
+
+<h1 id="ranking-head">Ranking Head</h1><p>The goal of this model is to pair question and conversation encodings with document encodings to optimise the Document Ranking score.</p>
+<p>We apply the following steps:</p>
+<ol>
+<li>Pass through a fully connected layer with batch normalisation</li>
+<li>Apply a ReLU activation function</li>
+<li>Apply Dropout</li>
+<li>Pass through a fully connected layer with batch normalisation</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ranking_HEAD</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+        super(ranking_HEAD, self)<span style="color:#f92672">.</span>__init__()
+        <span style="color:#75715e"># dropout layer</span>
+        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(config<span style="color:#f92672">.</span>dropout)
+        <span style="color:#75715e"># relu activation function</span>
+        self<span style="color:#f92672">.</span>relu <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>ReLU()
+        <span style="color:#75715e"># dense layer 1</span>
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">768</span>, <span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># dense layer 2 (Output layer)</span>
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">768</span>, <span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># batch norm fc1</span>
+        self<span style="color:#f92672">.</span>bn1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm1d(<span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># batch norm fc2</span>
+        self<span style="color:#f92672">.</span>bn2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm1d(<span style="color:#ae81ff">768</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+
+        <span style="color:#75715e"># FC 1 + batch norm</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn1(self<span style="color:#f92672">.</span>fc1(x))
+        <span style="color:#75715e"># relu activatiom</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>relu(x)
+        <span style="color:#75715e"># dropout</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>dropout(x)
+        <span style="color:#75715e"># FC 2 + batch norm</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn2(self<span style="color:#f92672">.</span>fc2(x))
+
+        <span style="color:#66d9ef">return</span> x
+
+</code></pre></div>
+
+
+
+  
+
+
+
+<h1 id="pre-training-model">Pre-training Model</h1><p>The pre-training model simply passes the <code>input_id</code> and <code>mask</code> from the tokeniser through the bert model and the barlow head. The BERT parameters are frozen in the <a href="#bert-base">Bert Base</a> <code>init</code>, so only the <a href="#barlow-head">Barlow Head</a> parameters train.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">pretrainingModel</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+        super(pretrainingModel, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>bert <span style="color:#f92672">=</span> BERT(config)
+        self<span style="color:#f92672">.</span>barlow_HEAD <span style="color:#f92672">=</span> barlow_HEAD(config)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input_id, mask):
+        BERT_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bert(input_id, mask)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>barlow_HEAD(BERT_output)
+
+        <span style="color:#66d9ef">return</span> x
+</code></pre></div>
+
+
+
+  
+
+
+
+<h1 id="training-model">Training Model</h1><p>In the Training-Model, the <a href="pre-training-model">pre-training model</a> (including both <a href="#bert-base">Bert Base</a> and <a href="#barlow-head">Barlow Head</a>) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition <a href="#ranking-head">Ranking Head</a> which is trained with the objective of optimising document ranking scores.</p>
+<p>Moreover, the training-model includes a method <code>set_pretrain_model_to_eval</code> that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, <code>set_pretrain_model_to_eval</code> sets the <a href="pre-training-model">pre-training model</a> back to eval.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">trainingModel</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, pretrainingModel: pretrainingModel, config):
+        super(trainingModel, self)<span style="color:#f92672">.</span>__init__()
+
+        <span style="color:#75715e"># inherit the BERT and BarlowHEAD from pretraining model</span>
+        self<span style="color:#f92672">.</span>pretrainingModel <span style="color:#f92672">=</span> pretrainingModel
+        <span style="color:#75715e"># freeze all the parameters in barlow_HEAD. </span>
+        <span style="color:#75715e"># This embedding head shouldn&#39;t learn a new task. </span>
+        <span style="color:#75715e"># Ranking head needs to adapt to embedding provided.</span>
+        <span style="color:#66d9ef">for</span> param <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>pretrainingModel<span style="color:#f92672">.</span>parameters():
+            param<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+            
+        self<span style="color:#f92672">.</span>ranking_HEAD <span style="color:#f92672">=</span> ranking_HEAD(config)
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_pretrain_model_to_eval</span>(self):
+        self<span style="color:#f92672">.</span>pretrainingModel<span style="color:#f92672">.</span>eval()
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input_id, mask):
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>pretrainingModel(input_id, mask)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>ranking_HEAD(x)
+
+        <span style="color:#66d9ef">return</span> x
+</code></pre></div>
+  
+    
+
+
+
+  
+
+
+
+<h1 id="introduction">Introduction</h1><p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p><strong>This example API documentation page was created with <a href="https://github.com/bep/docuapi/">DocuAPI</a>, a multilingual documentation theme for the static site generator <a href="http://gohugo.io/">Hugo</a>.</strong></p>
+
+
+
+
+  
+
+
+
+<h1 id="authentication">Authentication</h1><blockquote>
+<p>To authorize, use this code:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/bep/kittn/auth&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">Authorize</span>(<span style="color:#e6db74">&#34;meowmeowmeow&#34;</span>)
+
+	<span style="color:#75715e">// Just to make it compile
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">api</span>
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;kittn&#39;</span>
+
+api <span style="color:#f92672">=</span> <span style="color:#66d9ef">Kittn</span><span style="color:#f92672">::</span><span style="color:#66d9ef">APIClient</span><span style="color:#f92672">.</span>authorize!(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> kittn
+
+api <span style="color:#f92672">=</span> kittn<span style="color:#f92672">.</span>authorize(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># With shell, you can just pass the correct header with each request</span>
+curl <span style="color:#e6db74">&#34;api_endpoint_here&#34;</span>
+  -H <span style="color:#e6db74">&#34;Authorization: meowmeowmeow&#34;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">kittn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;kittn&#39;</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">kittn</span>.<span style="color:#a6e22e">authorize</span>(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>);
+</code></pre></div><blockquote>
+<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+</blockquote>
+<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p><code>Authorization: meowmeowmeow</code></p>
+<aside class="notice">
+You must replace <code>meowmeowmeow</code> with your personal API key.
+</aside>
+
+  
+    
+
+
+
+  
+
+
+
+<h1 id="kittens">Kittens</h1>
+
+
+
+  
+
+
+
+<h2 id="get-all-kittens">Get All Kittens</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/bep/kittn/auth&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">Authorize</span>(<span style="color:#e6db74">&#34;meowmeowmeow&#34;</span>)
+
+	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">GetKittens</span>()
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;kittn&#39;</span>
+
+api <span style="color:#f92672">=</span> <span style="color:#66d9ef">Kittn</span><span style="color:#f92672">::</span><span style="color:#66d9ef">APIClient</span><span style="color:#f92672">.</span>authorize!(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+api<span style="color:#f92672">.</span>kittens<span style="color:#f92672">.</span>get
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> kittn
+
+api <span style="color:#f92672">=</span> kittn<span style="color:#f92672">.</span>authorize(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+api<span style="color:#f92672">.</span>kittens<span style="color:#f92672">.</span>get()
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl <span style="color:#e6db74">&#34;http://example.com/api/kittens&#34;</span>
+  -H <span style="color:#e6db74">&#34;Authorization: meowmeowmeow&#34;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">kittn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;kittn&#39;</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">kittn</span>.<span style="color:#a6e22e">authorize</span>(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>);
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">kittens</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">kittens</span>.<span style="color:#a6e22e">get</span>();
+</code></pre></div><blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  {
+    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Fluffums&#34;</span>,
+    <span style="color:#f92672">&#34;breed&#34;</span>: <span style="color:#e6db74">&#34;calico&#34;</span>,
+    <span style="color:#f92672">&#34;fluffiness&#34;</span>: <span style="color:#ae81ff">6</span>,
+    <span style="color:#f92672">&#34;cuteness&#34;</span>: <span style="color:#ae81ff">7</span>
+  },
+  {
+    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2</span>,
+    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Max&#34;</span>,
+    <span style="color:#f92672">&#34;breed&#34;</span>: <span style="color:#e6db74">&#34;unknown&#34;</span>,
+    <span style="color:#f92672">&#34;fluffiness&#34;</span>: <span style="color:#ae81ff">5</span>,
+    <span style="color:#f92672">&#34;cuteness&#34;</span>: <span style="color:#ae81ff">10</span>
+  }
+]
+</code></pre></div><p>This endpoint retrieves all kittens.</p>
+
+
+
+
+  
+
+
+
+<h3 id="http-request">HTTP Request</h3><p><code>GET http://example.com/api/kittens</code></p>
+
+
+
+
+  
+
+
+
+<h3 id="query-parameters">Query Parameters</h3><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>include_cats</td>
+<td>false</td>
+<td>If set to true, the result will also include cats.</td>
+</tr>
+<tr>
+<td>available</td>
+<td>true</td>
+<td>If set to false, the result will include kittens that have already been adopted.</td>
+</tr>
+</tbody>
+</table>
+<aside class="success">
+Remember — a happy kitten is an authenticated kitten!
+</aside>
+
+  
+    
+
+
+
+  
+
+
+
+<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/bep/kittn/auth&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">Authorize</span>(<span style="color:#e6db74">&#34;meowmeowmeow&#34;</span>)
+
+	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">GetKitten</span>(<span style="color:#ae81ff">2</span>)
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;kittn&#39;</span>
+
+api <span style="color:#f92672">=</span> <span style="color:#66d9ef">Kittn</span><span style="color:#f92672">::</span><span style="color:#66d9ef">APIClient</span><span style="color:#f92672">.</span>authorize!(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+api<span style="color:#f92672">.</span>kittens<span style="color:#f92672">.</span>get(<span style="color:#ae81ff">2</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> kittn
+
+api <span style="color:#f92672">=</span> kittn<span style="color:#f92672">.</span>authorize(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+api<span style="color:#f92672">.</span>kittens<span style="color:#f92672">.</span>get(<span style="color:#ae81ff">2</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl <span style="color:#e6db74">&#34;http://example.com/api/kittens/2&#34;</span>
+  -H <span style="color:#e6db74">&#34;Authorization: meowmeowmeow&#34;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">kittn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;kittn&#39;</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">kittn</span>.<span style="color:#a6e22e">authorize</span>(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>);
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">max</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">kittens</span>.<span style="color:#a6e22e">get</span>(<span style="color:#ae81ff">2</span>);
+</code></pre></div><blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2</span>,
+  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Max&#34;</span>,
+  <span style="color:#f92672">&#34;breed&#34;</span>: <span style="color:#e6db74">&#34;unknown&#34;</span>,
+  <span style="color:#f92672">&#34;fluffiness&#34;</span>: <span style="color:#ae81ff">5</span>,
+  <span style="color:#f92672">&#34;cuteness&#34;</span>: <span style="color:#ae81ff">10</span>
+}
+</code></pre></div><p>This endpoint retrieves a specific kitten.</p>
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+
+
+
+
+  
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+
+
+<h3 id="http-request-1">HTTP Request</h3><p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
+
+
+
+
+  
+
+
+
+<h3 id="url-parameters">URL Parameters</h3><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the kitten to retrieve</td>
+</tr>
+</tbody>
+</table>
+
+  
+    
+
+
+
+  
+
+
+
+<h1 id="errors">Errors</h1><aside class="notice">This error section is stored in a separate file, errors.md. DocuAPI allows you to split the single page documentation in as many files as needed. Files are included in the  default Hugo page order . One way of ordering the pages is by setting the page `weight` in the front matter. Pages with lower weight will be listed first.</aside>
+<p>The Kittn API uses the following error codes:</p>
+
+
+
+
+  
+
+
+
+<h2 id="4xx">4xx</h2><table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400</td>
+<td>Bad Request &ndash; Your request sucks</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized &ndash; Your API key is wrong</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found &ndash; The specified kitten could not be found</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone &ndash; The kitten requested has been removed from our servers</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&rsquo;m a teapot</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+  
+
+
+
+<h2 id="5xx">5xx</h2><table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>500</td>
+<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+</tr>
+</tbody>
+</table>
+
+  
+
+      </div>
+      <div class="dark-box">
+        
+          <div class="lang-selector" x-data="langController" x-init="initLangs([{&#34;key&#34;:&#34;go&#34;,&#34;name&#34;:&#34;Go&#34;},{&#34;key&#34;:&#34;shell&#34;,&#34;name&#34;:&#34;Shell&#34;},{&#34;key&#34;:&#34;ruby&#34;,&#34;name&#34;:&#34;Ruby&#34;},{&#34;key&#34;:&#34;python&#34;,&#34;name&#34;:&#34;Python&#34;},{&#34;key&#34;:&#34;javascript&#34;,&#34;name&#34;:&#34;Javascript&#34;}])">
+            <template x-for="(tab, index) in tabs">
+              <a x-text="tab.name" :class="{ 'active': tab.active }" @click="changeLanguage(index)"></a>
+            </template>
+          </div>
+        
+      </div>
+    </div>
+    
+  </body>
+</html>

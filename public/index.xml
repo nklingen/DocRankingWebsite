@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DocuAPI Example Site</title>
+    <link>https://docuapi.netlify.com/</link>
+    <description>Recent content on DocuAPI Example Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://docuapi.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Model</title>
+      <link>https://docuapi.netlify.com/model/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://docuapi.netlify.com/model/</guid>
+      <description>Model
+The following section will discuss how the pre-training and training models are constructed.
+To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.</description>
+    </item>
+    
+    <item>
+      <title>API Reference</title>
+      <link>https://docuapi.netlify.com/main/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://docuapi.netlify.com/main/</guid>
+      <description>IntroductionWelcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+This example API documentation page was created with DocuAPI, a multilingual documentation theme for the static site generator Hugo.</description>
+    </item>
+    
+    <item>
+      <title>Kittens</title>
+      <link>https://docuapi.netlify.com/kittens/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://docuapi.netlify.com/kittens/</guid>
+      <description>Kittens Get All Kittenspackage main import &amp;#34;github.com/bep/kittn/auth&amp;#34; func main() { api := auth.Authorize(&amp;#34;meowmeowmeow&amp;#34;) _ = api.GetKittens() } require &amp;#39;kittn&amp;#39; api = Kittn::APIClient.authorize!(&amp;#39;meowmeowmeow&amp;#39;) api.kittens.get import kittn api = kittn.authorize(&amp;#39;meowmeowmeow&amp;#39;) api.kittens.get() curl &amp;#34;http://example.com/api/kittens&amp;#34; -H &amp;#34;Authorization: meowmeowmeow&amp;#34; const kittn = require(&amp;#39;kittn&amp;#39;); let api = kittn.authorize(&amp;#39;meowmeowmeow&amp;#39;); let kittens = api.kittens.get();  The above command returns JSON structured like this:
+ [ { &amp;#34;id&amp;#34;: 1, &amp;#34;name&amp;#34;: &amp;#34;Fluffums&amp;#34;, &amp;#34;breed&amp;#34;: &amp;#34;calico&amp;#34;, &amp;#34;fluffiness&amp;#34;: 6, &amp;#34;cuteness&amp;#34;: 7 }, { &amp;#34;id&amp;#34;: 2, &amp;#34;name&amp;#34;: &amp;#34;Max&amp;#34;, &amp;#34;breed&amp;#34;: &amp;#34;unknown&amp;#34;, &amp;#34;fluffiness&amp;#34;: 5, &amp;#34;cuteness&amp;#34;: 10 } ] This endpoint retrieves all kittens.</description>
+    </item>
+    
+    <item>
+      <title>Get a Specific Kitten</title>
+      <link>https://docuapi.netlify.com/kittens-specific/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://docuapi.netlify.com/kittens-specific/</guid>
+      <description>Get a Specific Kittenpackage main import &amp;#34;github.com/bep/kittn/auth&amp;#34; func main() { api := auth.Authorize(&amp;#34;meowmeowmeow&amp;#34;) _ = api.GetKitten(2) } require &amp;#39;kittn&amp;#39; api = Kittn::APIClient.authorize!(&amp;#39;meowmeowmeow&amp;#39;) api.kittens.get(2) import kittn api = kittn.authorize(&amp;#39;meowmeowmeow&amp;#39;) api.kittens.get(2) curl &amp;#34;http://example.com/api/kittens/2&amp;#34; -H &amp;#34;Authorization: meowmeowmeow&amp;#34; const kittn = require(&amp;#39;kittn&amp;#39;); let api = kittn.authorize(&amp;#39;meowmeowmeow&amp;#39;); let max = api.kittens.get(2);  The above command returns JSON structured like this:
+ { &amp;#34;id&amp;#34;: 2, &amp;#34;name&amp;#34;: &amp;#34;Max&amp;#34;, &amp;#34;breed&amp;#34;: &amp;#34;unknown&amp;#34;, &amp;#34;fluffiness&amp;#34;: 5, &amp;#34;cuteness&amp;#34;: 10 } This endpoint retrieves a specific kitten.</description>
+    </item>
+    
+    <item>
+      <title>Errors</title>
+      <link>https://docuapi.netlify.com/errors/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://docuapi.netlify.com/errors/</guid>
+      <description>ErrorsThis error section is stored in a separate file, errors.md. DocuAPI allows you to split the single page documentation in as many files as needed. Files are included in the default Hugo page order . One way of ordering the pages is by setting the page `weight` in the front matter. Pages with lower weight will be listed first. The Kittn API uses the following error codes:
+4xx   Error Code Meaning     400 Bad Request &amp;ndash; Your request sucks   401 Unauthorized &amp;ndash; Your API key is wrong   403 Forbidden &amp;ndash; The kitten requested is hidden for administrators only   404 Not Found &amp;ndash; The specified kitten could not be found   405 Method Not Allowed &amp;ndash; You tried to access a kitten with an invalid method   406 Not Acceptable &amp;ndash; You requested a format that isn&amp;rsquo;t json   410 Gone &amp;ndash; The kitten requested has been removed from our servers   418 I&amp;rsquo;m a teapot   429 Too Many Requests &amp;ndash; You&amp;rsquo;re requesting too many kittens!</description>
+    </item>
+    
+  </channel>
+</rss>

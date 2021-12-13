@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="nn">
+  <head>
+	<meta name="generator" content="Hugo 0.89.4" />
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>
+      DocuAPI-døme
+    </title>
+    
+
+
+
+
+
+
+
+
+<link href='/styles/screen.min.3cfaf877873801d20836e07f7d60c446e1a81bbe338985c65355362c37f116b2.css' rel="stylesheet" media="screen" integrity="sha256-PPr4d4c4AdIINuB/fWDERuGoG74ziYXGU1U2LDfxFrI=" />
+<link href='/styles/print.min.9c7d3c118c66de77e439d080b5fd628d6a5ed904dcaccf395285fffb0d97feb6.css' rel="stylesheet" media="print" integrity="sha256-nH08EYxm3nfkOdCAtf1ijWpe2QTcrM85UoX/&#43;w2X/rY=" />
+
+
+    
+
+
+
+
+  
+
+<script src="/js/index.e4619e460f1bf032b63c9e8bf4c022ec118c03648d58c61e6a8402ae9e194017.js" integrity="sha256-5GGeRg8b8DK2PJ6L9MAi7BGMA2SNWMYeaoQCrp4ZQBc=" defer></script>
+
+    
+    <style>
+      [x-cloak] {
+      display: none !important;
+      }
+    </style>
+  </head>
+  <body class="index" x-data="{ navOpen: false }" x-cloak>
+    <a href="#" id="nav-button" @click="navOpen = !navOpen" :class="{'open': navOpen }">
+      <span>
+        NAV
+        <img src='/images/navbar.png'/>
+      </span>
+    </a>
+    <div class="toc-wrapper" :class="{'open': navOpen }">
+      
+       <img src='/images/logo.png' class="logo" />
+      
+        <div class="search" x-data="searchController">
+          <input x-model.debounce.100ms="query" type="search" class="search" id="input-search" placeholder='Søk'>
+          <ul class="search-results visible" x-show="results.length > 0" x-transition.duration.700ms >
+            <template x-for="item in results">
+              <li>
+                <a x-text="item.title"></a>
+              </li>
+            </template>
+          </ul>
+        </div>
+      
+      
+  
+  
+    
+  
+  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;innleiing&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Innleiing&#34;},{&#34;id&#34;:&#34;autentisering&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Autentisering&#34;},{&#34;id&#34;:&#34;kattungar&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;hent-alle-kattungane&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;http-frespurnad&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;HTTP-førespurnad&#34;},{&#34;id&#34;:&#34;query-parametrar&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Query-parametrar&#34;}],&#34;title&#34;:&#34;Hent alle kattungane&#34;},{&#34;id&#34;:&#34;hent-ein-kattunge&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;http-frespurnad-1&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;HTTP-førespurnad&#34;},{&#34;id&#34;:&#34;url-parametrar&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;URL-parametrar&#34;}],&#34;title&#34;:&#34;Hent éin kattunge&#34;}],&#34;title&#34;:&#34;Kattungar&#34;},{&#34;id&#34;:&#34;feil&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;sub&#34;:[]}],&#34;title&#34;:&#34;Feil&#34;}])" @scroll.window="onScroll()">
+    
+    <template x-for="row in rows">
+      <li>
+        <a x-text="row.title" @click="click(row)" :href="`#${row.id}`" class="toc-link" x-bind="rowClass(row)"></a>
+        
+          <ul x-show="row.open" x-bind="transitions()" class="da-toc-list-h2">
+            <template x-for="row in row.sub">
+              <li>
+                <a x-text="row.title" @click="click(row)" :href="`#${row.id}`" class="toc-link" x-bind="rowClass(row)"></a>
+                
+                  <ul x-show="row.open" x-bind="transitions()" class="toc-list-h3">
+                    <template x-for="row in row.sub">
+                      <li>
+                        <a  x-text="row.title" @click="click(row)" :href="`#${row.id}`"  class="toc-link" x-bind="rowClass(row)"></a>
+                      </li>
+                    </template>
+                  </ul>
+                
+              </li>
+            </template>
+          </ul>
+        
+      </li>
+    </template>
+  </ul>
+
+      
+        <ul class="toc-footer">
+          <li class="toc-h1">
+            Omsetjing
+          </li>
+          
+<ul>
+    
+        <li class="toc-h2"><a href="https://docuapi.netlify.com/">English</a></li>
+    
+</ul>
+
+
+        </ul>
+      
+      
+        <ul class="toc-footer">
+          
+            <li>
+              <a href='#'>Registrer deg for ein utviklarnøkkel</a>
+            </li>
+          
+            <li>
+              Dokumentasjonen er driven av <a href="https://github.com/bep/docuapi">DocuAPI</a>
+            </li>
+          
+            <li>
+              Hugo Theme av <a href="https://github.com/bep">bep</a>
+            </li>
+          
+        </ul>
+      
+      
+
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        
+  
+    
+  
+    
+  
+  
+    
+
+
+
+
+
+<h1 id="innleiing">Innleiing</h1><p>Velkomen skal du vere til Kittn API! Du kan bruke vårt API til å kalle våre Kittn endepunkt. Her kan du hente ut ymse informasjon om kattar, kattungar og ulike rasar frå vår database.</p>
+<p>Her finn du kodedøme i Shell, Ruby, Python og Go! Du ser desse døma i det mørke feltet til høgre på skjermen &ndash; og du kan byta programmeringsspråk ved å klikke på menyen oppe til høgre.</p>
+<p><strong>Denne API-dokumentasjonen vart laga med  <a href="https://github.com/bep/docuapi/">DocuAPI</a>,  eit tema for den statiske nettstadsmakaren <a href="http://gohugo.io/">Hugo</a>.</strong></p>
+
+
+
+
+  
+
+
+
+<h1 id="autentisering">Autentisering</h1><blockquote>
+<p>For å autentisere ein brukar, bruk denne koden:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/bep/kittn/auth&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">Authorize</span>(<span style="color:#e6db74">&#34;meowmeowmeow&#34;</span>)
+
+	<span style="color:#75715e">// Just to make it compile
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">api</span>
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;kittn&#39;</span>
+
+api <span style="color:#f92672">=</span> <span style="color:#66d9ef">Kittn</span><span style="color:#f92672">::</span><span style="color:#66d9ef">APIClient</span><span style="color:#f92672">.</span>authorize!(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> kittn
+
+api <span style="color:#f92672">=</span> kittn<span style="color:#f92672">.</span>authorize(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># With shell, you can just pass the correct header with each request</span>
+curl <span style="color:#e6db74">&#34;api_endpoint_here&#34;</span>
+  -H <span style="color:#e6db74">&#34;Authorization: meowmeowmeow&#34;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">kittn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;kittn&#39;</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">kittn</span>.<span style="color:#a6e22e">authorize</span>(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>);
+</code></pre></div><blockquote>
+<p>Gjer vel og erstatt <code>meowmeowmeow</code> med din eigen API-nøkkel.</p>
+</blockquote>
+<p>Kittn tek i bruk API-nøklar for å gi tilgang til APIet. Du kan kan registrere deg for å få ein slik nøkkel på vår  <a href="http://example.com/developers">utviklarportal</a>.</p>
+<p>Kittn forventar at API-nøkkelen er med i alle API-førespurnader til serveren i ein header som ser slik ut:</p>
+<p><code>Authorization: meowmeowmeow</code></p>
+<aside class="notice">
+Merk:  Du må erstatte <code>meowmeowmeow</code> med din personlege nøkkel.</aside>
+
+
+
+
+  
+
+
+
+<h1 id="kattungar">Kattungar</h1>
+
+
+
+  
+
+
+
+<h2 id="hent-alle-kattungane">Hent alle kattungane</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/bep/kittn/auth&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">Authorize</span>(<span style="color:#e6db74">&#34;meowmeowmeow&#34;</span>)
+
+	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">GetKittens</span>()
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;kittn&#39;</span>
+
+api <span style="color:#f92672">=</span> <span style="color:#66d9ef">Kittn</span><span style="color:#f92672">::</span><span style="color:#66d9ef">APIClient</span><span style="color:#f92672">.</span>authorize!(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+api<span style="color:#f92672">.</span>kittens<span style="color:#f92672">.</span>get
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> kittn
+
+api <span style="color:#f92672">=</span> kittn<span style="color:#f92672">.</span>authorize(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+api<span style="color:#f92672">.</span>kittens<span style="color:#f92672">.</span>get()
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl <span style="color:#e6db74">&#34;http://example.com/api/kittens&#34;</span>
+  -H <span style="color:#e6db74">&#34;Authorization: meowmeowmeow&#34;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">kittn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;kittn&#39;</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">kittn</span>.<span style="color:#a6e22e">authorize</span>(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>);
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">kittens</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">kittens</span>.<span style="color:#a6e22e">get</span>();
+</code></pre></div><blockquote>
+<p>Programmet over gir ein JSON-struktur som ser slik ut:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  {
+    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Fluffums&#34;</span>,
+    <span style="color:#f92672">&#34;breed&#34;</span>: <span style="color:#e6db74">&#34;calico&#34;</span>,
+    <span style="color:#f92672">&#34;fluffiness&#34;</span>: <span style="color:#ae81ff">6</span>,
+    <span style="color:#f92672">&#34;cuteness&#34;</span>: <span style="color:#ae81ff">7</span>
+  },
+  {
+    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2</span>,
+    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Max&#34;</span>,
+    <span style="color:#f92672">&#34;breed&#34;</span>: <span style="color:#e6db74">&#34;unknown&#34;</span>,
+    <span style="color:#f92672">&#34;fluffiness&#34;</span>: <span style="color:#ae81ff">5</span>,
+    <span style="color:#f92672">&#34;cuteness&#34;</span>: <span style="color:#ae81ff">10</span>
+  }
+]
+</code></pre></div><p>Dette endepunktet leverer alle kattungar.</p>
+
+
+
+
+  
+
+
+
+<h3 id="http-frespurnad">HTTP-førespurnad</h3><p><code>GET http://example.com/api/kittens</code></p>
+
+
+
+
+  
+
+
+
+<h3 id="query-parametrar">Query-parametrar</h3><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Standardverdi</th>
+<th>Skildring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>include_cats</td>
+<td>false</td>
+<td>Set til true for å få alle kattar.</td>
+</tr>
+<tr>
+<td>available</td>
+<td>true</td>
+<td>Set til false for å ta med kattar som allereie er blitt adoptert vekk.</td>
+</tr>
+</tbody>
+</table>
+<aside class="success">
+Hugs — ein lukkeleg kattunge er ein autentisert kattunge!
+</aside>
+
+
+
+
+  
+
+
+
+<h2 id="hent-ein-kattunge">Hent éin kattunge</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/bep/kittn/auth&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">api</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">Authorize</span>(<span style="color:#e6db74">&#34;meowmeowmeow&#34;</span>)
+
+	<span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">GetKitten</span>(<span style="color:#ae81ff">2</span>)
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;kittn&#39;</span>
+
+api <span style="color:#f92672">=</span> <span style="color:#66d9ef">Kittn</span><span style="color:#f92672">::</span><span style="color:#66d9ef">APIClient</span><span style="color:#f92672">.</span>authorize!(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+api<span style="color:#f92672">.</span>kittens<span style="color:#f92672">.</span>get(<span style="color:#ae81ff">2</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> kittn
+
+api <span style="color:#f92672">=</span> kittn<span style="color:#f92672">.</span>authorize(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>)
+api<span style="color:#f92672">.</span>kittens<span style="color:#f92672">.</span>get(<span style="color:#ae81ff">2</span>)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl <span style="color:#e6db74">&#34;http://example.com/api/kittens/2&#34;</span>
+  -H <span style="color:#e6db74">&#34;Authorization: meowmeowmeow&#34;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">kittn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;kittn&#39;</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">kittn</span>.<span style="color:#a6e22e">authorize</span>(<span style="color:#e6db74">&#39;meowmeowmeow&#39;</span>);
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">max</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">kittens</span>.<span style="color:#a6e22e">get</span>(<span style="color:#ae81ff">2</span>);
+</code></pre></div><blockquote>
+<p>Programmet over gir ein JSON-struktur som ser slik ut:</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2</span>,
+  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Max&#34;</span>,
+  <span style="color:#f92672">&#34;breed&#34;</span>: <span style="color:#e6db74">&#34;unknown&#34;</span>,
+  <span style="color:#f92672">&#34;fluffiness&#34;</span>: <span style="color:#ae81ff">5</span>,
+  <span style="color:#f92672">&#34;cuteness&#34;</span>: <span style="color:#ae81ff">10</span>
+}
+</code></pre></div><p>Dette endepunktet hentar ut éin spesifikk kattunge.</p>
+<aside class="warning">Inne i HTML-blokker som denne så kan du ikkje bruke Markdown.  Bruk <code>&lt;code&gt;</code> for å markere kjeldekode.</aside>
+
+
+
+
+  
+
+
+
+<h3 id="http-frespurnad-1">HTTP-førespurnad</h3><p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
+
+
+
+
+  
+
+
+
+<h3 id="url-parametrar">URL-parametrar</h3><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Skildring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>IDen til kattungen du ynskjer å hente</td>
+</tr>
+</tbody>
+</table>
+
+  
+    
+
+
+
+  
+
+
+
+<h1 id="feil">Feil</h1><aside class="notice">Denne seksjonen om feil er lagra i éiga fil, errors.md. DocuAPI let deg dele dokumentasjonen inn i så mange filer som du måtte ynskje. Filene blir henta inn i standard Hugo-rekkjefølgje. Den lettaste måten å styre denne rekkjefølgja er å sette vekt på kvar side, t.d. `weight=10` Sidene med lågast vekt blir vist først.</aside>
+<p>Kittn-APIet tek i bruk følgjande feilkodar:</p>
+<table>
+<thead>
+<tr>
+<th>Feilkode</th>
+<th>Forklaring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400</td>
+<td>Bad Request &ndash; Din førespurnad har forbetringspotensiale</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized &ndash; Feil API-nøkkel</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden &ndash; Denne kattungen er berre tilgjengeleg for administratorar</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found &ndash; Denne kattungen vart ikkje funnen</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed &ndash; Du prøvde å få tak i kattungen på ein snodig og ulovleg måte</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable &ndash; Du bad om eit format som ikkje er  JSON</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone &ndash; Kattungen har rømt frå serveren.</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&rsquo;m a teapot</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests &ndash; Du spør om for mange kattungar, ta det med ro!</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error &ndash; Me har eit problem med serveren. Prøv igjen seinare.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable &ndash; Me er nede for vedlikehald. Prøv igjen seinare.</td>
+</tr>
+</tbody>
+</table>
+
+  
+
+      </div>
+      <div class="dark-box">
+        
+          <div class="lang-selector" x-data="langController" x-init="initLangs([{&#34;key&#34;:&#34;go&#34;,&#34;name&#34;:&#34;Go&#34;},{&#34;key&#34;:&#34;shell&#34;,&#34;name&#34;:&#34;Shell&#34;},{&#34;key&#34;:&#34;ruby&#34;,&#34;name&#34;:&#34;Ruby&#34;},{&#34;key&#34;:&#34;python&#34;,&#34;name&#34;:&#34;Python&#34;},{&#34;key&#34;:&#34;javascript&#34;,&#34;name&#34;:&#34;Javascript&#34;}])">
+            <template x-for="(tab, index) in tabs">
+              <a x-text="tab.name" :class="{ 'active': tab.active }" @click="changeLanguage(index)"></a>
+            </template>
+          </div>
+        
+      </div>
+    </div>
+    
+  </body>
+</html>
