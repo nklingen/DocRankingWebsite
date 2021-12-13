@@ -3,6 +3,7 @@ themesdir = "themes/"
 languageCode = "en-us"
 baseurl = "https://nklingen.github.io/DocRankingWebsite/"
 title = "DocuAPI Example Site"
+publishDir = "docs"
 
 disableKinds = ["taxonomyTerm"]
 
