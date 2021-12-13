@@ -12,7 +12,14 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/model/</guid>
-      <description>ModelTo re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking).</description>
+      <description>Model Pre-training Model
+  BERT
+  Barlow Head
+    Training Model
+  Pre-training Model
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Bert &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Barlow Head
+  Ranking Head
+   To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.</description>
     </item>
     
     <item>
@@ -21,9 +28,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/barlow/</guid>
-      <description>BarlowThe original paper, Barlow Twins: Self-Supervised Learning via Redundancy Reduction proposes a loss function to encourage a model to create embeddings that are invariant to distortion.
-&#34;Barlow Twins strongly benefits from the use of very high-dimensional embeddings&#34; and &#34;does not require large batches&#34;  Their architecture is as follows (simplified explanation):
- take an input image and apply distortions to it to feed the distorted images through an encoder network and a projector network to get their respective embeddings compute the Barlow Loss between the embeddings.</description>
+      <description>Barlow# f: encoder network # lambda: weight on the off-diagonal terms # N: batch size # D: dimensionality of the embeddings # # mm: matrix-matrix multiplication # off_diagonal: off-diagonal elements of a matrix # eye: identity matrix for x in loader: # load a batch with N samples # two randomly augmented versions of x y_a, y_b = augment(x) # compute embeddings z_a = f(y_a) # NxD z_b = f(y_b) # NxD # normalize repr.</description>
     </item>
     
   </channel>

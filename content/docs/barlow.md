@@ -7,28 +7,6 @@ mathjax: true
 
 # Barlow
 
-The original paper, [Barlow Twins: Self-Supervised Learning via Redundancy Reduction](https://arxiv.org/pdf/2103.03230.pdf) proposes a loss function to encourage a model to create embeddings that are invariant to distortion. 
-
-<aside class="success">
-"Barlow Twins strongly benefits from the use of very high-dimensional embeddings" and "does not require large batches"
-</aside>
-
-
-Their architecture is as follows (simplified explanation): 
-1. take an input image and apply distortions to it to
-2. feed the distorted images through an encoder network and a projector network to get their respective embeddings
-3. compute the Barlow Loss between the embeddings.
-
-The Barlow Loss objective function compares the cross correlation between the embeddings of the distorted images with the identity matrix, essentially pushing them to be similar. 
-
-
-$$L_{BT}\triangleq \sum_i(1-C_{ii})^2 + \lambda \sum_i \sum_{j \neq i}(C_{ij})^2$$
-
-
-where the first term is the `invariance term` and the second term is the `redundancy reduction term`
-
-The code from the [paper](https://arxiv.org/pdf/2103.03230.pdf) is as follows:
-
 ```python
 # f: encoder network
 # lambda: weight on the off-diagonal terms
@@ -57,3 +35,26 @@ loss = c_diff.sum()
     loss.backward()
     optimizer.step()
 ```
+
+The original paper, [Barlow Twins: Self-Supervised Learning via Redundancy Reduction](https://arxiv.org/pdf/2103.03230.pdf) proposes a loss function to encourage a model to create embeddings that are invariant to distortion. 
+
+<aside class="success">
+"Barlow Twins strongly benefits from the use of very high-dimensional embeddings" and "does not require large batches"
+</aside>
+
+
+Their architecture is as follows (simplified explanation): 
+1. take an input image and apply distortions to it to
+2. feed the distorted images through an encoder network and a projector network to get their respective embeddings
+3. compute the Barlow Loss between the embeddings.
+
+The Barlow Loss objective function compares the cross correlation between the embeddings of the distorted images with the identity matrix, essentially pushing them to be similar. 
+
+
+$$L_{BT}\triangleq \sum_i(1-C_{ii})^2 + \lambda \sum_i \sum_{j \neq i}(C_{ij})^2$$
+
+
+where the first term is the `invariance term` and the second term is the `redundancy reduction term`
+
+The code from the [paper](https://arxiv.org/pdf/2103.03230.pdf) is as follows:
+

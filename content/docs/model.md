@@ -7,11 +7,6 @@ title: Model
 
 # Model
 
-*To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head *without unlearning* the embeddings from the pretraining.*
-
-The following section will discuss how the pre-training and training models are constructed. 
-
-The two Models are demonstrated below, where <a style="color:tomato">red</a> indicates sub-models with frozen parameters and where <a style="color:dodgerblue">blue</a> indicates sub-models with trainable parameters.
 
 > **Pre-training Model**
 > 1. <p style="color:tomato"> BERT</p>
@@ -24,11 +19,16 @@ The two Models are demonstrated below, where <a style="color:tomato">red</a> ind
 > 2. <p style="color:dodgerblue"> Ranking Head</p>
 
 
+*To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head *without unlearning* the embeddings from the pretraining.*
+
+The following section will discuss how the pre-training and training models are constructed. 
+
+The two Models are demonstrated below, where <a style="color:tomato">red</a> indicates sub-models with frozen parameters and where <a style="color:dodgerblue">blue</a> indicates sub-models with trainable parameters.
+
+
 
 ## BERT Base
-To delve further into the code, the BERT base simply passes the `input_id` and `attention_masks` from the Bert tokeniser through the Danish BERT model, downloaded from [Hugging Face](https://huggingface.co/Maltehb/danish-bert-botxo/blob/main/README.md). 
 
-We made an initial choice to only train the head (for time and complexity reasons), therefore in `init` we freeze all BERT paramters so they will never be updated.
 
 ```python 
 class BERT(nn.Module):
@@ -52,16 +52,12 @@ class BERT(nn.Module):
         return BERT_output
 ```
 
+To delve further into the code, the BERT base simply passes the `input_id` and `attention_masks` from the Bert tokeniser through the Danish BERT model, downloaded from [Hugging Face](https://huggingface.co/Maltehb/danish-bert-botxo/blob/main/README.md). 
+
+We made an initial choice to only train the head (for time and complexity reasons), therefore in `init` we freeze all BERT paramters so they will never be updated.
+
+
 ## Barlow Head
-
-The goal of this model is to push together question and conversation encodings. 
-
-We apply the following steps:
-1. capture the CLS token from the BERT output.
-2. Pass through a fully connected layer with batch normalisation
-3. Apply a ReLU activation function
-4. Apply Dropout
-5. Pass through a second fully connected layer with batch normalisation
 
 ```python
 class barlow_HEAD(nn.Module):
@@ -97,15 +93,17 @@ class barlow_HEAD(nn.Module):
         return x
 ```
 
-## Ranking Head
-
-The goal of this model is to pair question and conversation encodings with document encodings to optimise the Document Ranking score.
+The goal of this model is to push together question and conversation encodings. 
 
 We apply the following steps:
-1. Pass through a fully connected layer with batch normalisation
-2. Apply a ReLU activation function
-3. Apply Dropout
-4. Pass through a fully connected layer with batch normalisation
+1. capture the CLS token from the BERT output.
+2. Pass through a fully connected layer with batch normalisation
+3. Apply a ReLU activation function
+4. Apply Dropout
+5. Pass through a second fully connected layer with batch normalisation
+
+
+## Ranking Head
 
 ```python
 class ranking_HEAD(nn.Module):
@@ -141,8 +139,17 @@ class ranking_HEAD(nn.Module):
 ```
 
 
+The goal of this model is to pair question and conversation encodings with document encodings to optimise the Document Ranking score.
+
+We apply the following steps:
+1. Pass through a fully connected layer with batch normalisation
+2. Apply a ReLU activation function
+3. Apply Dropout
+4. Pass through a fully connected layer with batch normalisation
+
+
 ## Pre-training Model
-The pre-training model simply passes the `input_id` and `mask` from the tokeniser through the bert model and the barlow head. The BERT parameters are frozen in the [Bert Base](#bert-base) `init`, so only the [Barlow Head](#barlow-head) parameters train. 
+
 ```python
 class pretrainingModel(nn.Module):
 
@@ -158,10 +165,10 @@ class pretrainingModel(nn.Module):
         return x
 ```
 
-## Training Model
-In the Training-Model, the [pre-training model](pre-training-model) (including both [Bert Base](#bert-base) and [Barlow Head](#barlow-head)) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition [Ranking Head](#ranking-head) which is trained with the objective of optimising document ranking scores.
+The pre-training model simply passes the `input_id` and `mask` from the tokeniser through the bert model and the barlow head. The BERT parameters are frozen in the [Bert Base](#bert-base) `init`, so only the [Barlow Head](#barlow-head) parameters train. 
 
-Moreover, the training-model includes a method `set_pretrain_model_to_eval` that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, `set_pretrain_model_to_eval` sets the [pre-training model](pre-training-model) back to eval.
+
+## Training Model
 
 ```python
 class trainingModel(nn.Module):
@@ -188,3 +195,8 @@ class trainingModel(nn.Module):
 
         return x
 ```
+
+In the Training-Model, the [pre-training model](pre-training-model) (including both [Bert Base](#bert-base) and [Barlow Head](#barlow-head)) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition [Ranking Head](#ranking-head) which is trained with the objective of optimising document ranking scores.
+
+Moreover, the training-model includes a method `set_pretrain_model_to_eval` that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, `set_pretrain_model_to_eval` sets the [pre-training model](pre-training-model) back to eval.
+

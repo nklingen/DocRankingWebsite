@@ -30,6 +30,8 @@
 <script src="/DocRankingWebsite/js/index.e4619e460f1bf032b63c9e8bf4c022ec118c03648d58c61e6a8402ae9e194017.js" integrity="sha256-5GGeRg8b8DK2PJ6L9MAi7BGMA2SNWMYeaoQCrp4ZQBc=" defer></script>
 
     
+
+
     <style>
       [x-cloak] {
       display: none !important;
@@ -111,10 +113,7 @@
 
 
 
-<h1 id="model">Model</h1><p><em>To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head <em>without unlearning</em> the embeddings from the pretraining.</em></p>
-<p>The following section will discuss how the pre-training and training models are constructed.</p>
-<p>The two Models are demonstrated below, where <a style="color:tomato">red</a> indicates sub-models with frozen parameters and where <a style="color:dodgerblue">blue</a> indicates sub-models with trainable parameters.</p>
-<blockquote>
+<h1 id="model">Model</h1><blockquote>
 <p><strong>Pre-training Model</strong></p>
 <ol>
 <li>
@@ -138,6 +137,9 @@
 </li>
 </ol>
 </blockquote>
+<p><em>To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head <em>without unlearning</em> the embeddings from the pretraining.</em></p>
+<p>The following section will discuss how the pre-training and training models are constructed.</p>
+<p>The two Models are demonstrated below, where <a style="color:tomato">red</a> indicates sub-models with frozen parameters and where <a style="color:dodgerblue">blue</a> indicates sub-models with trainable parameters.</p>
 
 
 
@@ -146,9 +148,7 @@
 
 
 
-<h2 id="bert-base">BERT Base</h2><p>To delve further into the code, the BERT base simply passes the <code>input_id</code> and <code>attention_masks</code> from the Bert tokeniser through the Danish BERT model, downloaded from <a href="https://huggingface.co/Maltehb/danish-bert-botxo/blob/main/README.md">Hugging Face</a>.</p>
-<p>We made an initial choice to only train the head (for time and complexity reasons), therefore in <code>init</code> we freeze all BERT paramters so they will never be updated.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BERT</span>(nn<span style="color:#f92672">.</span>Module):
+<h2 id="bert-base">BERT Base</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BERT</span>(nn<span style="color:#f92672">.</span>Module):
     <span style="color:#66d9ef">def</span> __init__(self, config):
 
         super(BERT, self)<span style="color:#f92672">.</span>__init__()
@@ -167,7 +167,9 @@
         BERT_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bert(input_id, attention_mask<span style="color:#f92672">=</span>mask)
 
         <span style="color:#66d9ef">return</span> BERT_output
-</code></pre></div>
+</code></pre></div><p>To delve further into the code, the BERT base simply passes the <code>input_id</code> and <code>attention_masks</code> from the Bert tokeniser through the Danish BERT model, downloaded from <a href="https://huggingface.co/Maltehb/danish-bert-botxo/blob/main/README.md">Hugging Face</a>.</p>
+<p>We made an initial choice to only train the head (for time and complexity reasons), therefore in <code>init</code> we freeze all BERT paramters so they will never be updated.</p>
+
 
 
 
@@ -175,16 +177,7 @@
 
 
 
-<h2 id="barlow-head">Barlow Head</h2><p>The goal of this model is to push together question and conversation encodings.</p>
-<p>We apply the following steps:</p>
-<ol>
-<li>capture the CLS token from the BERT output.</li>
-<li>Pass through a fully connected layer with batch normalisation</li>
-<li>Apply a ReLU activation function</li>
-<li>Apply Dropout</li>
-<li>Pass through a second fully connected layer with batch normalisation</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">barlow_HEAD</span>(nn<span style="color:#f92672">.</span>Module):
+<h2 id="barlow-head">Barlow Head</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">barlow_HEAD</span>(nn<span style="color:#f92672">.</span>Module):
 
     <span style="color:#66d9ef">def</span> __init__(self, config):
         super(barlow_HEAD, self)<span style="color:#f92672">.</span>__init__()
@@ -215,7 +208,16 @@
         x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn2(self<span style="color:#f92672">.</span>fc2(x))
 
         <span style="color:#66d9ef">return</span> x
-</code></pre></div>
+</code></pre></div><p>The goal of this model is to push together question and conversation encodings.</p>
+<p>We apply the following steps:</p>
+<ol>
+<li>capture the CLS token from the BERT output.</li>
+<li>Pass through a fully connected layer with batch normalisation</li>
+<li>Apply a ReLU activation function</li>
+<li>Apply Dropout</li>
+<li>Pass through a second fully connected layer with batch normalisation</li>
+</ol>
+
 
 
 
@@ -223,15 +225,7 @@
 
 
 
-<h2 id="ranking-head">Ranking Head</h2><p>The goal of this model is to pair question and conversation encodings with document encodings to optimise the Document Ranking score.</p>
-<p>We apply the following steps:</p>
-<ol>
-<li>Pass through a fully connected layer with batch normalisation</li>
-<li>Apply a ReLU activation function</li>
-<li>Apply Dropout</li>
-<li>Pass through a fully connected layer with batch normalisation</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ranking_HEAD</span>(nn<span style="color:#f92672">.</span>Module):
+<h2 id="ranking-head">Ranking Head</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ranking_HEAD</span>(nn<span style="color:#f92672">.</span>Module):
 
     <span style="color:#66d9ef">def</span> __init__(self, config):
         super(ranking_HEAD, self)<span style="color:#f92672">.</span>__init__()
@@ -261,7 +255,15 @@
 
         <span style="color:#66d9ef">return</span> x
 
-</code></pre></div>
+</code></pre></div><p>The goal of this model is to pair question and conversation encodings with document encodings to optimise the Document Ranking score.</p>
+<p>We apply the following steps:</p>
+<ol>
+<li>Pass through a fully connected layer with batch normalisation</li>
+<li>Apply a ReLU activation function</li>
+<li>Apply Dropout</li>
+<li>Pass through a fully connected layer with batch normalisation</li>
+</ol>
+
 
 
 
@@ -269,8 +271,7 @@
 
 
 
-<h2 id="pre-training-model">Pre-training Model</h2><p>The pre-training model simply passes the <code>input_id</code> and <code>mask</code> from the tokeniser through the bert model and the barlow head. The BERT parameters are frozen in the <a href="#bert-base">Bert Base</a> <code>init</code>, so only the <a href="#barlow-head">Barlow Head</a> parameters train.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">pretrainingModel</span>(nn<span style="color:#f92672">.</span>Module):
+<h2 id="pre-training-model">Pre-training Model</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">pretrainingModel</span>(nn<span style="color:#f92672">.</span>Module):
 
     <span style="color:#66d9ef">def</span> __init__(self, config):
         super(pretrainingModel, self)<span style="color:#f92672">.</span>__init__()
@@ -282,7 +283,8 @@
         x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>barlow_HEAD(BERT_output)
 
         <span style="color:#66d9ef">return</span> x
-</code></pre></div>
+</code></pre></div><p>The pre-training model simply passes the <code>input_id</code> and <code>mask</code> from the tokeniser through the bert model and the barlow head. The BERT parameters are frozen in the <a href="#bert-base">Bert Base</a> <code>init</code>, so only the <a href="#barlow-head">Barlow Head</a> parameters train.</p>
+
 
 
 
@@ -290,9 +292,7 @@
 
 
 
-<h2 id="training-model">Training Model</h2><p>In the Training-Model, the <a href="pre-training-model">pre-training model</a> (including both <a href="#bert-base">Bert Base</a> and <a href="#barlow-head">Barlow Head</a>) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition <a href="#ranking-head">Ranking Head</a> which is trained with the objective of optimising document ranking scores.</p>
-<p>Moreover, the training-model includes a method <code>set_pretrain_model_to_eval</code> that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, <code>set_pretrain_model_to_eval</code> sets the <a href="pre-training-model">pre-training model</a> back to eval.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">trainingModel</span>(nn<span style="color:#f92672">.</span>Module):
+<h2 id="training-model">Training Model</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">trainingModel</span>(nn<span style="color:#f92672">.</span>Module):
 
     <span style="color:#66d9ef">def</span> __init__(self, pretrainingModel: pretrainingModel, config):
         super(trainingModel, self)<span style="color:#f92672">.</span>__init__()
@@ -315,7 +315,9 @@
         x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>ranking_HEAD(x)
 
         <span style="color:#66d9ef">return</span> x
-</code></pre></div>
+</code></pre></div><p>In the Training-Model, the <a href="pre-training-model">pre-training model</a> (including both <a href="#bert-base">Bert Base</a> and <a href="#barlow-head">Barlow Head</a>) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition <a href="#ranking-head">Ranking Head</a> which is trained with the objective of optimising document ranking scores.</p>
+<p>Moreover, the training-model includes a method <code>set_pretrain_model_to_eval</code> that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, <code>set_pretrain_model_to_eval</code> sets the <a href="pre-training-model">pre-training model</a> back to eval.</p>
+
   
     
 
@@ -325,21 +327,7 @@
 
 
 
-<h1 id="barlow">Barlow</h1><p>The original paper, <a href="https://arxiv.org/pdf/2103.03230.pdf">Barlow Twins: Self-Supervised Learning via Redundancy Reduction</a> proposes a loss function to encourage a model to create embeddings that are invariant to distortion.</p>
-<aside class="success">
-"Barlow Twins strongly benefits from the use of very high-dimensional embeddings" and "does not require large batches"
-</aside>
-<p>Their architecture is as follows (simplified explanation):</p>
-<ol>
-<li>take an input image and apply distortions to it to</li>
-<li>feed the distorted images through an encoder network and a projector network to get their respective embeddings</li>
-<li>compute the Barlow Loss between the embeddings.</li>
-</ol>
-<p>The Barlow Loss objective function compares the cross correlation between the embeddings of the distorted images with the identity matrix, essentially pushing them to be similar.</p>
-<p>$$L_{BT}\triangleq \sum_i(1-C_{ii})^2 + \lambda \sum_i \sum_{j \neq i}(C_{ij})^2$$</p>
-<p>where the first term is the <code>invariance term</code> and the second term is the <code>redundancy reduction term</code></p>
-<p>The code from the <a href="https://arxiv.org/pdf/2103.03230.pdf">paper</a> is as follows:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># f: encoder network</span>
+<h1 id="barlow">Barlow</h1><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># f: encoder network</span>
 <span style="color:#75715e"># lambda: weight on the off-diagonal terms</span>
 <span style="color:#75715e"># N: batch size</span>
 <span style="color:#75715e"># D: dimensionality of the embeddings</span>
@@ -365,7 +353,21 @@ loss <span style="color:#f92672">=</span> c_diff<span style="color:#f92672">.</s
     <span style="color:#75715e"># optimization step</span>
     loss<span style="color:#f92672">.</span>backward()
     optimizer<span style="color:#f92672">.</span>step()
-</code></pre></div>
+</code></pre></div><p>The original paper, <a href="https://arxiv.org/pdf/2103.03230.pdf">Barlow Twins: Self-Supervised Learning via Redundancy Reduction</a> proposes a loss function to encourage a model to create embeddings that are invariant to distortion.</p>
+<aside class="success">
+"Barlow Twins strongly benefits from the use of very high-dimensional embeddings" and "does not require large batches"
+</aside>
+<p>Their architecture is as follows (simplified explanation):</p>
+<ol>
+<li>take an input image and apply distortions to it to</li>
+<li>feed the distorted images through an encoder network and a projector network to get their respective embeddings</li>
+<li>compute the Barlow Loss between the embeddings.</li>
+</ol>
+<p>The Barlow Loss objective function compares the cross correlation between the embeddings of the distorted images with the identity matrix, essentially pushing them to be similar.</p>
+<p>$$L_{BT}\triangleq \sum_i(1-C_{ii})^2 + \lambda \sum_i \sum_{j \neq i}(C_{ij})^2$$</p>
+<p>where the first term is the <code>invariance term</code> and the second term is the <code>redundancy reduction term</code></p>
+<p>The code from the <a href="https://arxiv.org/pdf/2103.03230.pdf">paper</a> is as follows:</p>
+
   
 
       </div>
