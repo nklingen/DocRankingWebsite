@@ -64,7 +64,7 @@
   
     
   
-  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;}])" @scroll.window="onScroll()">
+  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;},{&#34;id&#34;:&#34;barlow&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;sub&#34;:[]}],&#34;title&#34;:&#34;Barlow&#34;}])" @scroll.window="onScroll()">
     
     <template x-for="row in rows">
       <li>
@@ -103,6 +103,8 @@
   
     
   
+    
+  
   
     
 
@@ -110,8 +112,8 @@
 
 
 
-<h1 id="model">Model</h1><p>The following section will discuss how the pre-training and training models are constructed.</p>
-<p>To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly. Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head <em>without unlearning</em> the embeddings from the pretraining.</p>
+<h1 id="model">Model</h1><p><em>To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head <em>without unlearning</em> the embeddings from the pretraining.</em></p>
+<p>The following section will discuss how the pre-training and training models are constructed.</p>
 <p>The two Models are demonstrated below, where <a style="color:tomato">red</a> indicates sub-models with frozen parameters and where <a style="color:dodgerblue">blue</a> indicates sub-models with trainable parameters.</p>
 <blockquote>
 <p><strong>Pre-training Model</strong></p>
@@ -314,6 +316,56 @@
         x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>ranking_HEAD(x)
 
         <span style="color:#66d9ef">return</span> x
+</code></pre></div>
+  
+    
+
+
+
+  
+
+
+
+<h1 id="barlow">Barlow</h1><p>The original paper, <a href="https://arxiv.org/pdf/2103.03230.pdf">Barlow Twins: Self-Supervised Learning via Redundancy Reduction</a> proposes a loss function to encourage a model to create embeddings that are invariant to distortion.</p>
+<aside class="success">
+"Barlow Twins strongly benefits from the use of very high-dimensional embeddings" and "does not require large batches"
+</aside>
+<p>Their architecture is as follows (simplified explanation):</p>
+<ol>
+<li>take an input image and apply distortions to it to</li>
+<li>feed the distorted images through an encoder network and a projector network to get their respective embeddings</li>
+<li>compute the Barlow Loss between the embeddings.</li>
+</ol>
+<p>The Barlow Loss objective function compares the cross correlation between the embeddings of the distorted images with the identity matrix, essentially pushing them to be similar.</p>
+<p>$$L_{BT}\triangleq \sum_i(1-C_{ii})^2 + \lambda \sum_i \sum_{j \neq i}(C_{ij})^2$$</p>
+<p>where the first term is the <code>invariance term</code> and the second term is the <code>redundancy reduction term</code></p>
+<p>The code from the <a href="https://arxiv.org/pdf/2103.03230.pdf">paper</a> is as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># f: encoder network</span>
+<span style="color:#75715e"># lambda: weight on the off-diagonal terms</span>
+<span style="color:#75715e"># N: batch size</span>
+<span style="color:#75715e"># D: dimensionality of the embeddings</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># mm: matrix-matrix multiplication</span>
+<span style="color:#75715e"># off_diagonal: off-diagonal elements of a matrix</span>
+<span style="color:#75715e"># eye: identity matrix</span>
+
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> loader: <span style="color:#75715e"># load a batch with N samples</span>
+    <span style="color:#75715e"># two randomly augmented versions of x</span>
+    y_a, y_b <span style="color:#f92672">=</span> augment(x)
+    <span style="color:#75715e"># compute embeddings</span>
+    z_a <span style="color:#f92672">=</span> f(y_a) <span style="color:#75715e"># NxD</span>
+    z_b <span style="color:#f92672">=</span> f(y_b) <span style="color:#75715e"># NxD</span>
+    <span style="color:#75715e"># normalize repr. along the batch dimension</span>
+    z_a_norm <span style="color:#f92672">=</span> (z_a <span style="color:#f92672">-</span> z_a<span style="color:#f92672">.</span>mean(<span style="color:#ae81ff">0</span>)) <span style="color:#f92672">/</span> z_a<span style="color:#f92672">.</span>std(<span style="color:#ae81ff">0</span>) <span style="color:#75715e"># NxD</span>
+    z_b_norm <span style="color:#f92672">=</span> (z_b <span style="color:#f92672">-</span> z_b<span style="color:#f92672">.</span>mean(<span style="color:#ae81ff">0</span>)) <span style="color:#f92672">/</span> z_b<span style="color:#f92672">.</span>std(<span style="color:#ae81ff">0</span>) <span style="color:#75715e"># NxD</span>
+    <span style="color:#75715e"># cross-correlation matrix</span>
+    c <span style="color:#f92672">=</span> mm(z_a_norm<span style="color:#f92672">.</span>T, z_b_norm) <span style="color:#f92672">/</span> N <span style="color:#75715e"># DxD</span>
+<span style="color:#75715e"># loss</span>
+c_diff <span style="color:#f92672">=</span> (c <span style="color:#f92672">-</span> eye(D))<span style="color:#f92672">.</span>pow(<span style="color:#ae81ff">2</span>) <span style="color:#75715e"># DxD </span>
+loss <span style="color:#f92672">=</span> c_diff<span style="color:#f92672">.</span>sum()
+    <span style="color:#75715e"># optimization step</span>
+    loss<span style="color:#f92672">.</span>backward()
+    optimizer<span style="color:#f92672">.</span>step()
 </code></pre></div>
   
 
