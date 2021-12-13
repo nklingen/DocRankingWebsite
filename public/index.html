@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+	<meta name="generator" content="Hugo 0.89.4" />
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>
+      DocuAPI Example Site
+    </title>
+    
+
+
+
+
+
+
+
+
+<link href='/DocRankingWebsite/styles/screen.min.dbadab296f1baed94fc5109ecef71e620384615bbb9c2c5fb0f0c9f10f900ab9.css' rel="stylesheet" media="screen" integrity="sha256-262rKW8brtlPxRCezvceYgOEYVu7nCxfsPDJ8Q&#43;QCrk=" />
+<link href='/DocRankingWebsite/styles/print.min.e0db9e70d333a92515c28264c527870199194686a03c044b826e9827ec960b9d.css' rel="stylesheet" media="print" integrity="sha256-4NuecNMzqSUVwoJkxSeHAZkZRoagPARLgm6YJ&#43;yWC50=" />
+
+
+    
+
+
+
+
+  
+
+<script src="/DocRankingWebsite/js/index.e4619e460f1bf032b63c9e8bf4c022ec118c03648d58c61e6a8402ae9e194017.js" integrity="sha256-5GGeRg8b8DK2PJ6L9MAi7BGMA2SNWMYeaoQCrp4ZQBc=" defer></script>
+
+    
+    <style>
+      [x-cloak] {
+      display: none !important;
+      }
+    </style>
+  </head>
+  <body class="index" x-data="{ navOpen: false }" x-cloak>
+    <a href="#" id="nav-button" @click="navOpen = !navOpen" :class="{'open': navOpen }">
+      <span>
+        NAV
+        <img src='/DocRankingWebsite/images/navbar.png'/>
+      </span>
+    </a>
+    <div class="toc-wrapper" :class="{'open': navOpen }">
+      
+       <img src='/DocRankingWebsite/images/logo.png' class="logo" />
+      
+        <div class="search" x-data="searchController">
+          <input x-model.debounce.100ms="query" type="search" class="search" id="input-search" placeholder='Search'>
+          <ul class="search-results visible" x-show="results.length > 0" x-transition.duration.700ms >
+            <template x-for="item in results">
+              <li>
+                <a x-text="item.title"></a>
+              </li>
+            </template>
+          </ul>
+        </div>
+      
+      
+  
+  
+    
+  
+  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;}])" @scroll.window="onScroll()">
+    
+    <template x-for="row in rows">
+      <li>
+        <a x-text="row.title" @click="click(row)" :href="`#${row.id}`" class="toc-link" x-bind="rowClass(row)"></a>
+        
+          <ul x-show="row.open" x-bind="transitions()" class="da-toc-list-h2">
+            <template x-for="row in row.sub">
+              <li>
+                <a x-text="row.title" @click="click(row)" :href="`#${row.id}`" class="toc-link" x-bind="rowClass(row)"></a>
+                
+                  <ul x-show="row.open" x-bind="transitions()" class="toc-list-h3">
+                    <template x-for="row in row.sub">
+                      <li>
+                        <a  x-text="row.title" @click="click(row)" :href="`#${row.id}`"  class="toc-link" x-bind="rowClass(row)"></a>
+                      </li>
+                    </template>
+                  </ul>
+                
+              </li>
+            </template>
+          </ul>
+        
+      </li>
+    </template>
+  </ul>
+
+      
+      
+      
+
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        
+  
+    
+  
+  
+    
+
+
+
+
+
+<h1 id="model">Model</h1><p>The following section will discuss how the pre-training and training models are constructed.</p>
+<p>To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly. Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head <em>without unlearning</em> the embeddings from the pretraining.</p>
+<p>The two Models are demonstrated below, where <a style="color:tomato">red</a> indicates sub-models with frozen parameters and where <a style="color:dodgerblue">blue</a> indicates sub-models with trainable parameters.</p>
+<blockquote>
+<p><strong>Pre-training Model</strong></p>
+<ol>
+<li>
+<p style="color:tomato"> BERT</p>
+</li>
+<li>
+<p style="color:dodgerblue"> Barlow Head</p>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>Training Model</strong></p>
+<ol>
+<li>
+<p style="color:tomato"> Pre-training Model</p>
+<p style="color:tomato">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bert<p>
+<p style="color:tomato">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Barlow Head</p>
+</li>
+<li>
+<p style="color:dodgerblue"> Ranking Head</p>
+</li>
+</ol>
+</blockquote>
+
+
+
+
+  
+
+
+
+<h2 id="bert-base">BERT Base</h2><p>To delve further into the code, the BERT base simply passes the <code>input_id</code> and <code>attention_masks</code> from the Bert tokeniser through the Danish BERT model, downloaded from <a href="https://huggingface.co/Maltehb/danish-bert-botxo/blob/main/README.md">Hugging Face</a>.</p>
+<p>We made an initial choice to only train the head (for time and complexity reasons), therefore in <code>init</code> we freeze all BERT paramters so they will never be updated.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BERT</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+
+        super(BERT, self)<span style="color:#f92672">.</span>__init__()
+        <span style="color:#75715e"># Reference: https://huggingface.co/Maltehb/danish-bert-botxo/blob/main/README.md</span>
+        self<span style="color:#f92672">.</span>bert <span style="color:#f92672">=</span> AutoModel<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;Maltehb/danish-bert-botxo&#34;</span>)
+
+        <span style="color:#75715e"># freeze all the parameters in BERT. This prevents updating of model weights during fine-tuning</span>
+        <span style="color:#66d9ef">for</span> param <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>bert<span style="color:#f92672">.</span>parameters():
+            param<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+
+
+    <span style="color:#75715e"># define the forward pass</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input_id, mask):
+
+        <span style="color:#75715e"># Bert</span>
+        BERT_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bert(input_id, attention_mask<span style="color:#f92672">=</span>mask)
+
+        <span style="color:#66d9ef">return</span> BERT_output
+</code></pre></div>
+
+
+
+  
+
+
+
+<h2 id="barlow-head">Barlow Head</h2><p>The goal of this model is to push together question and conversation encodings.</p>
+<p>We apply the following steps:</p>
+<ol>
+<li>capture the CLS token from the BERT output.</li>
+<li>Pass through a fully connected layer with batch normalisation</li>
+<li>Apply a ReLU activation function</li>
+<li>Apply Dropout</li>
+<li>Pass through a second fully connected layer with batch normalisation</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">barlow_HEAD</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+        super(barlow_HEAD, self)<span style="color:#f92672">.</span>__init__()
+        <span style="color:#75715e"># dropout layer</span>
+        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(config<span style="color:#f92672">.</span>dropout)
+        <span style="color:#75715e"># relu activation function</span>
+        self<span style="color:#f92672">.</span>relu <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>ReLU()
+        <span style="color:#75715e"># dense layer 1</span>
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">768</span>, <span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># dense layer 2 (Output layer)</span>
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">768</span>, <span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># batch norm fc1</span>
+        self<span style="color:#f92672">.</span>bn1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm1d(<span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># batch norm fc2</span>
+        self<span style="color:#f92672">.</span>bn2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm1d(<span style="color:#ae81ff">768</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, BERT_output):
+
+        <span style="color:#75715e"># capture cls</span>
+        cls <span style="color:#f92672">=</span> BERT_output<span style="color:#f92672">.</span>last_hidden_state[:, <span style="color:#ae81ff">0</span>, :]
+        <span style="color:#75715e"># FC 1 + batch norm</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn1(self<span style="color:#f92672">.</span>fc1(cls))
+        <span style="color:#75715e"># relu activatiom</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>relu(x)
+        <span style="color:#75715e"># dropout</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>dropout(x)
+        <span style="color:#75715e"># FC 2 + batch norm</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn2(self<span style="color:#f92672">.</span>fc2(x))
+
+        <span style="color:#66d9ef">return</span> x
+</code></pre></div>
+
+
+
+  
+
+
+
+<h2 id="ranking-head">Ranking Head</h2><p>The goal of this model is to pair question and conversation encodings with document encodings to optimise the Document Ranking score.</p>
+<p>We apply the following steps:</p>
+<ol>
+<li>Pass through a fully connected layer with batch normalisation</li>
+<li>Apply a ReLU activation function</li>
+<li>Apply Dropout</li>
+<li>Pass through a fully connected layer with batch normalisation</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ranking_HEAD</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+        super(ranking_HEAD, self)<span style="color:#f92672">.</span>__init__()
+        <span style="color:#75715e"># dropout layer</span>
+        self<span style="color:#f92672">.</span>dropout <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Dropout(config<span style="color:#f92672">.</span>dropout)
+        <span style="color:#75715e"># relu activation function</span>
+        self<span style="color:#f92672">.</span>relu <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>ReLU()
+        <span style="color:#75715e"># dense layer 1</span>
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">768</span>, <span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># dense layer 2 (Output layer)</span>
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">768</span>, <span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># batch norm fc1</span>
+        self<span style="color:#f92672">.</span>bn1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm1d(<span style="color:#ae81ff">768</span>)
+        <span style="color:#75715e"># batch norm fc2</span>
+        self<span style="color:#f92672">.</span>bn2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm1d(<span style="color:#ae81ff">768</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+
+        <span style="color:#75715e"># FC 1 + batch norm</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn1(self<span style="color:#f92672">.</span>fc1(x))
+        <span style="color:#75715e"># relu activatiom</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>relu(x)
+        <span style="color:#75715e"># dropout</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>dropout(x)
+        <span style="color:#75715e"># FC 2 + batch norm</span>
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn2(self<span style="color:#f92672">.</span>fc2(x))
+
+        <span style="color:#66d9ef">return</span> x
+
+</code></pre></div>
+
+
+
+  
+
+
+
+<h2 id="pre-training-model">Pre-training Model</h2><p>The pre-training model simply passes the <code>input_id</code> and <code>mask</code> from the tokeniser through the bert model and the barlow head. The BERT parameters are frozen in the <a href="#bert-base">Bert Base</a> <code>init</code>, so only the <a href="#barlow-head">Barlow Head</a> parameters train.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">pretrainingModel</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, config):
+        super(pretrainingModel, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>bert <span style="color:#f92672">=</span> BERT(config)
+        self<span style="color:#f92672">.</span>barlow_HEAD <span style="color:#f92672">=</span> barlow_HEAD(config)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input_id, mask):
+        BERT_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bert(input_id, mask)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>barlow_HEAD(BERT_output)
+
+        <span style="color:#66d9ef">return</span> x
+</code></pre></div>
+
+
+
+  
+
+
+
+<h2 id="training-model">Training Model</h2><p>In the Training-Model, the <a href="pre-training-model">pre-training model</a> (including both <a href="#bert-base">Bert Base</a> and <a href="#barlow-head">Barlow Head</a>) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition <a href="#ranking-head">Ranking Head</a> which is trained with the objective of optimising document ranking scores.</p>
+<p>Moreover, the training-model includes a method <code>set_pretrain_model_to_eval</code> that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, <code>set_pretrain_model_to_eval</code> sets the <a href="pre-training-model">pre-training model</a> back to eval.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">trainingModel</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, pretrainingModel: pretrainingModel, config):
+        super(trainingModel, self)<span style="color:#f92672">.</span>__init__()
+
+        <span style="color:#75715e"># inherit the BERT and BarlowHEAD from pretraining model</span>
+        self<span style="color:#f92672">.</span>pretrainingModel <span style="color:#f92672">=</span> pretrainingModel
+        <span style="color:#75715e"># freeze all the parameters in barlow_HEAD. </span>
+        <span style="color:#75715e"># This embedding head shouldn&#39;t learn a new task. </span>
+        <span style="color:#75715e"># Ranking head needs to adapt to embedding provided.</span>
+        <span style="color:#66d9ef">for</span> param <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>pretrainingModel<span style="color:#f92672">.</span>parameters():
+            param<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+            
+        self<span style="color:#f92672">.</span>ranking_HEAD <span style="color:#f92672">=</span> ranking_HEAD(config)
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_pretrain_model_to_eval</span>(self):
+        self<span style="color:#f92672">.</span>pretrainingModel<span style="color:#f92672">.</span>eval()
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input_id, mask):
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>pretrainingModel(input_id, mask)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>ranking_HEAD(x)
+
+        <span style="color:#66d9ef">return</span> x
+</code></pre></div>
+  
+
+      </div>
+      <div class="dark-box">
+        
+          <div class="lang-selector" x-data="langController" x-init="initLangs([{&#34;key&#34;:&#34;python&#34;,&#34;name&#34;:&#34;Python&#34;}])">
+            <template x-for="(tab, index) in tabs">
+              <a x-text="tab.name" :class="{ 'active': tab.active }" @click="changeLanguage(index)"></a>
+            </template>
+          </div>
+        
+      </div>
+    </div>
+    
+  </body>
+</html>

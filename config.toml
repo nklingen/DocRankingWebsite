@@ -1,7 +1,7 @@
 theme = "docuapi"
 themesdir = "themes/"
 languageCode = "en-us"
-baseurl = "https://docuapi.netlify.com/"
+baseurl = "https://nklingen.github.io/DocRankingWebsite/"
 title = "DocuAPI Example Site"
 
 disableKinds = ["taxonomyTerm"]
