@@ -61,22 +61,6 @@
       
       
       
-        <ul class="toc-footer">
-          
-            <li>
-              <a href='#'>Sign Up for a Developer Key</a>
-            </li>
-          
-            <li>
-              Documentation Powered by <a href="https://github.com/bep/docuapi">DocuAPI</a>
-            </li>
-          
-            <li>
-              Hugo Theme by <a href="https://github.com/bep">bep</a>
-            </li>
-          
-        </ul>
-      
       
 
     </div>
@@ -89,7 +73,7 @@
       </div>
       <div class="dark-box">
         
-          <div class="lang-selector" x-data="langController" x-init="initLangs([{&#34;key&#34;:&#34;go&#34;,&#34;name&#34;:&#34;Go&#34;},{&#34;key&#34;:&#34;shell&#34;,&#34;name&#34;:&#34;Shell&#34;},{&#34;key&#34;:&#34;ruby&#34;,&#34;name&#34;:&#34;Ruby&#34;},{&#34;key&#34;:&#34;python&#34;,&#34;name&#34;:&#34;Python&#34;},{&#34;key&#34;:&#34;javascript&#34;,&#34;name&#34;:&#34;Javascript&#34;}])">
+          <div class="lang-selector" x-data="langController" x-init="initLangs([{&#34;key&#34;:&#34;python&#34;,&#34;name&#34;:&#34;Python&#34;}])">
             <template x-for="(tab, index) in tabs">
               <a x-text="tab.name" :class="{ 'active': tab.active }" @click="changeLanguage(index)"></a>
             </template>
