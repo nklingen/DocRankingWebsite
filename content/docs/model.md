@@ -194,7 +194,7 @@ class trainingModel(nn.Module):
         return x
 ```
 
-In the Training-Model, the [pre-training model](pre-training-model) (including both [Bert Base](#bert-base) and [Barlow Head](#barlow-head)) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition [Ranking Head](#ranking-head) which is trained with the objective of optimising document ranking scores.
+In the Training-Model, the [pre-training model](#pre-training-model) (including both [Bert Base](#bert-base) and [Barlow Head](#barlow-head)) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition [Ranking Head](#ranking-head) which is trained with the objective of optimising document ranking scores.
 
-Moreover, the training-model includes a method `set_pretrain_model_to_eval` that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, `set_pretrain_model_to_eval` sets the [pre-training model](pre-training-model) back to eval.
+Moreover, the training-model includes a method `set_pretrain_model_to_eval` that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, `set_pretrain_model_to_eval` sets the [pre-training model](#pre-training-model) back to eval.
 

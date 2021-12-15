@@ -65,7 +65,7 @@
   
     
   
-  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;intro&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;barlow&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;intro-1&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;theory&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Theory&#34;},{&#34;id&#34;:&#34;implementation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Implementation&#34;}],&#34;title&#34;:&#34;Barlow&#34;},{&#34;id&#34;:&#34;bert&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;BERT&#34;},{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;},{&#34;id&#34;:&#34;timeline&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Timeline&#34;},{&#34;id&#34;:&#34;discussion&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;sub&#34;:[]}],&#34;title&#34;:&#34;Discussion&#34;}])" @scroll.window="onScroll()">
+  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;intro&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;about&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;About&#34;},{&#34;id&#34;:&#34;motivation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Motivation&#34;}],&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;barlow&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;intro-1&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;theory&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Theory&#34;},{&#34;id&#34;:&#34;implementation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Implementation&#34;}],&#34;title&#34;:&#34;Barlow&#34;},{&#34;id&#34;:&#34;bert&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;BERT&#34;},{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;},{&#34;id&#34;:&#34;timeline&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Timeline&#34;},{&#34;id&#34;:&#34;discussion&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;sub&#34;:[]}],&#34;title&#34;:&#34;Discussion&#34;}])" @scroll.window="onScroll()">
     
     <template x-for="row in rows">
       <li>
@@ -121,9 +121,32 @@
 
 
 
-<h1 id="intro">Intro</h1><aside class="notice">
-Introduction / Motivation
-</aside>
+<h1 id="intro">Intro</h1>
+
+
+
+  
+
+
+
+<h2 id="about">About</h2><p>This website is a Handover Document by <a href="https://github.com/mikkelfo">Mikkel Odgaard</a> and <a href="https://github.com/nklingen">Natasha Klingenbrunn</a> for a collaboration project between Denmark&rsquo;s Technical University and <a href="https://www.raffle.ai">Raffle.ai</a>. The <a href="https://github.com/nklingen/BERT_Question_Answering">final code</a> can be found on Github.</p>
+<p>The website is broken down as follows:</p>
+<ol>
+<li>A brief conceptual background is given for Barlow Twins and BERT.</li>
+<li>Next, the Timeline section will discuss the evolution of our project and discuss the rationale behind given design choices.</li>
+<li>The code break-down for our model and barlow loss can be found in their respective sections.</li>
+<li>Finally, the discussion section will outline why believe our model was not successful, and touch upon our final thoughts.</li>
+</ol>
+
+
+
+
+  
+
+
+
+<h2 id="motivation">Motivation</h2><p>Raffle.ai&rsquo;s BERT Document Ranking Model sees better performance on questions than on conversations. The motivation behind this project is to leverage SSL to yield a more constant performance across input types. To accomplish this, we will introduce a pre-training step implementing Barlow Twins to push encodings together for similar questions and conversations. Having a successful implementation of the pre-training model will allow us to analyse the downstream effects in the BERT Ranking Model.</p>
+<p>For example, one hypothesis prior to beginning this project was that the BERT Ranking Model might project question and conversations into two seperate planes. Thus, while it may be very successful in one input-type, this does not translate to high performance for the other. We hope to learn whether having more similar embeddings for questions and conversations has a positive effect on the model, or whether the model&rsquo;s own learned representations are better. While we didn&rsquo;t find it likely to have a better initial performance (if projecting all inputs from the same answer_id together had a lower loss in the downstream task, it would have done it anyways), but hoped that we could see other indicators of pre-training benefitting the model, such as a quicker rate of converging, for example.</p>
 
   
     
@@ -458,8 +481,8 @@ Nat : Brief section on how BERT was implemented
         x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>ranking_HEAD(x)
 
         <span style="color:#66d9ef">return</span> x
-</code></pre></div><p>In the Training-Model, the <a href="pre-training-model">pre-training model</a> (including both <a href="#bert-base">Bert Base</a> and <a href="#barlow-head">Barlow Head</a>) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition <a href="#ranking-head">Ranking Head</a> which is trained with the objective of optimising document ranking scores.</p>
-<p>Moreover, the training-model includes a method <code>set_pretrain_model_to_eval</code> that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, <code>set_pretrain_model_to_eval</code> sets the <a href="pre-training-model">pre-training model</a> back to eval.</p>
+</code></pre></div><p>In the Training-Model, the <a href="#pre-training-model">pre-training model</a> (including both <a href="#bert-base">Bert Base</a> and <a href="#barlow-head">Barlow Head</a>) is passed as a parameter. All model parameters are frozen, such that the training model will not update parameters from the pre-training model. During a forward pass, input is passed through the frozen pre-training model and then through an addition <a href="#ranking-head">Ranking Head</a> which is trained with the objective of optimising document ranking scores.</p>
+<p>Moreover, the training-model includes a method <code>set_pretrain_model_to_eval</code> that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, <code>set_pretrain_model_to_eval</code> sets the <a href="#pre-training-model">pre-training model</a> back to eval.</p>
 
   
     
