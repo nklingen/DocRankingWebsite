@@ -21,7 +21,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/barlow/</guid>
-      <description>BarlowNat finish  # f: encoder network # lambda: weight on the off-diagonal terms # N: batch size # D: dimensionality of the embeddings # # mm: matrix-matrix multiplication # off_diagonal: off-diagonal elements of a matrix # eye: identity matrix for x in loader: # load a batch with N samples # two randomly augmented versions of x y_a, y_b = augment(x) # compute embeddings z_a = f(y_a) # NxD z_b = f(y_b) # NxD # normalize repr.</description>
+      <description>Barlow IntroBarlow Twins takes a batch of samples, applies noise to generate two distored versions, then passes both versions through two identical networks to get their corresponding embeddings. The Barlow loss is then computed on the embeddings, wherein the goal is to get the cross-correlation matrix between the embeddings as close as possible to the identity matrix. In this way, the embeddings of the two versions of the sample are encourraged to be similar, while redundancy between the components of the vectors is penalized.</description>
     </item>
     
     <item>
@@ -65,7 +65,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/discussion/</guid>
-      <description> DiscussionNat \ Mikkel  </description>
+      <description>DiscussionNat \ Mikkel  We can see that Barlow Head accomplishes what it needs to do. (it works) but still that it breaks the downstream BERT task. We tried both frozen and unfrozen heads, and in both cases BERT is much worse off with the pretraining than with random initialized weights. We made sure it can&amp;rsquo;t be a scaling issue as everything is normalized.
+Take-away, BERT makes its own representations in the encoding space that work well for document ranking, and tweaking these seems to hurt the model.</description>
     </item>
     
   </channel>

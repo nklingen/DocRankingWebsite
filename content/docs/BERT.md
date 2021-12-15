@@ -11,5 +11,3 @@ mathjax: true
 Nat : Brief section on how BERT was implemented
 </aside>
 
-
-
