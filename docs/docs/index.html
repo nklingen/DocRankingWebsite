@@ -65,7 +65,7 @@
   
     
   
-  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;intro&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;about&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;About&#34;},{&#34;id&#34;:&#34;motivation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Motivation&#34;}],&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;metrics&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Metrics&#34;},{&#34;id&#34;:&#34;timeline&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;exploratory-data-analysis&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;answer-ids&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Answer ids&#34;},{&#34;id&#34;:&#34;dataset-imbalance&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Dataset imbalance&#34;},{&#34;id&#34;:&#34;pca&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;PCA&#34;}],&#34;title&#34;:&#34;Exploratory Data Analysis&#34;},{&#34;id&#34;:&#34;document-ranking-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;preprocessing-for-bert&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Preprocessing for BERT&#34;},{&#34;id&#34;:&#34;bert-with-one-head&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;BERT with one head&#34;},{&#34;id&#34;:&#34;bert-with-dual-encoder&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;BERT with Dual Encoder&#34;},{&#34;id&#34;:&#34;gradient-clipping-l2-regularization--batch-normalization&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Gradient clipping, L2 regularization \u0026amp; batch normalization&#34;},{&#34;id&#34;:&#34;hyperparameter-tuning&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Hyperparameter Tuning&#34;}],&#34;title&#34;:&#34;Document Ranking Model&#34;},{&#34;id&#34;:&#34;pretraining-with-barlow-twins&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;theory&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Theory&#34;},{&#34;id&#34;:&#34;code&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Code&#34;},{&#34;id&#34;:&#34;implementation&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Implementation&#34;}],&#34;title&#34;:&#34;Pretraining with Barlow Twins&#34;}],&#34;title&#34;:&#34;Timeline&#34;},{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;},{&#34;id&#34;:&#34;discussion&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;barlow&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow&#34;},{&#34;id&#34;:&#34;barlow-with-document-ranking-bert&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Barlow with Document Ranking BERT&#34;}],&#34;title&#34;:&#34;Discussion&#34;}])" @scroll.window="onScroll()">
+  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;intro&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;about&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;About&#34;},{&#34;id&#34;:&#34;motivation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Motivation&#34;}],&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;metrics&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Metrics&#34;},{&#34;id&#34;:&#34;timeline&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;exploratory-data-analysis&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;answer-ids&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Answer ids&#34;},{&#34;id&#34;:&#34;dataset-imbalance&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Dataset imbalance&#34;},{&#34;id&#34;:&#34;pca&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;PCA&#34;}],&#34;title&#34;:&#34;Exploratory Data Analysis&#34;},{&#34;id&#34;:&#34;document-ranking-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;preprocessing-for-bert&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Preprocessing for BERT&#34;},{&#34;id&#34;:&#34;bert-with-one-head&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;BERT with one head&#34;},{&#34;id&#34;:&#34;bert-with-dual-encoder&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;BERT with Dual Encoder&#34;},{&#34;id&#34;:&#34;gradient-clipping-l2-regularization--batch-normalization&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Gradient clipping, L2 regularization \u0026amp; batch normalization&#34;},{&#34;id&#34;:&#34;hyperparameter-tuning&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Hyperparameter Tuning&#34;}],&#34;title&#34;:&#34;Document Ranking Model&#34;},{&#34;id&#34;:&#34;pretraining-with-barlow-twins&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;theory&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Theory&#34;},{&#34;id&#34;:&#34;code&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Code&#34;},{&#34;id&#34;:&#34;implementation&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Implementation&#34;}],&#34;title&#34;:&#34;Pretraining with Barlow Twins&#34;}],&#34;title&#34;:&#34;Timeline&#34;},{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;},{&#34;id&#34;:&#34;results&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;sub&#34;:[{&#34;id&#34;:&#34;document-ranking-results&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Document Ranking Results&#34;},{&#34;id&#34;:&#34;barlow-results&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Barlow Results&#34;},{&#34;id&#34;:&#34;barlow-and-document-ranking&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;Barlow and Document Ranking&#34;}]}],&#34;title&#34;:&#34;Results&#34;},{&#34;id&#34;:&#34;discussion&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;barlow&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow&#34;},{&#34;id&#34;:&#34;barlow-with-document-ranking-bert&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Barlow with Document Ranking BERT&#34;}],&#34;title&#34;:&#34;Discussion&#34;}])" @scroll.window="onScroll()">
     
     <template x-for="row in rows">
       <li>
@@ -112,6 +112,8 @@
   
     
   
+    
+  
   
     
 
@@ -143,8 +145,10 @@
 
 
 
-<h2 id="motivation">Motivation</h2><p>Raffle.ai&rsquo;s BERT Document Ranking Model sees better performance on questions than on conversations. The motivation behind this project is to introduce a pre-training step implementing Barlow Twins to push encodings together for similar questions and conversation, and to see if this yields a more constant performance across input types. Having a successful implementation of the pre-training model will allow us to analyse the downstream effects in the BERT Ranking Model.</p>
-<p>For example, one hypothesis prior to beginning this project was that the BERT Ranking Model might project question and conversations into two seperate planes. Thus, while it may be very successful in one input-type, this does not translate to high performance for the other. We hope to learn whether having more similar embeddings for questions and conversations has a positive effect on the model, or whether the model&rsquo;s own learned representations are better. While we didn&rsquo;t find it likely to have a better initial performance (if projecting all inputs from the same answer_id together had a lower loss in the downstream task, the original model would have done it anyways), but hoped that we could see other indicators of pre-training benefitting the model, such as a quicker rate of converging, for example.</p>
+<h2 id="motivation">Motivation</h2><p>Raffle.ai&rsquo;s BERT Document Ranking Model sees better performance on questions than on conversations. One hypothesis prior to beginning this project was that the BERT Ranking Model might project question and conversations into two seperate planes. Thus, while it may be very successful in one input-type, this does not translate to high performance for the other. The motivation behind this project is to introduce a pre-training step implementing Barlow Twins to push encodings together for similar questions and conversation.</p>
+<p>Conceptually, Barlow twins aims to &ldquo;collect&rdquo; queries from the same answer id [think: high precision, but not necessarily accurate], while Document Ranking will put individual queries closer to the answer [think: high accuracy, but not necessarily precise]. Training the two loss functions one after the other will ideally encourage both accurate and precise results wherein one query type doesn&rsquo;t outperform the other.</p>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/nat.png" alt="nat"></p>
+<p>Secondly, we would like to interpret the results on performance. Having a successful implementation of the pre-training model will allow us to analyse the downstream effects in the BERT Ranking Model. We hope to learn whether having more similar embeddings for questions and conversations has a positive effect on the model, or whether the model&rsquo;s own learned representations are better. While we didn&rsquo;t find it likely to have a better initial performance (if projecting all inputs from the same answer_id together had a lower loss in the downstream task, the original model would have done it anyways), but hoped that we could see other indicators of pre-training benefitting the model, such as a quicker rate of converging, for example.</p>
 
   
     
@@ -749,6 +753,226 @@ For clarity, question and conversations embeddings will be called "queries".
 
 
 
+<h1 id="results">Results</h1><p>Each model is set to terminate after 10 epochs without improvement of the validation loss. This is what causes the different termination times in the below plots.</p>
+
+
+
+
+  
+
+
+
+<h3 id="document-ranking-results">Document Ranking Results</h3><p>We begin with the baseline model, otherwise known as BERT with one head. We compare it with plots from our pre-processing experiments: TF-IDF pre-processing by section, or with 512 tokens. These results show us that the optimal pre-processing was just the initial implementation. Next, we implemented the Dual Encoder model, which we see gave a significant performance boost. We compare the three models via validation loss, Accuracy, and MAP.</p>
+<blockquote>
+<p>The best model is by far the dual encoder implementation. This implementation had a more gradual learning curve, starting off worse than the other single-head models, but was also to train for longer (10-20 epochs before stagnating) and giving significant improvements on all metrics. Most noticably, the dual encoder implementation surpasses the other models before they stagnate. This means that the dual encoder&rsquo;s increased performance is not just due to the longer training. Stopping the dual encoder model at the same point as the others would have also yielded significant improvements.</p>
+</blockquote>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/validation_loss.png" alt="Validation loss of the generic improvements"></p>
+<table>
+<thead>
+<tr>
+<th>Model / Top 3 accuracy</th>
+<th>Total</th>
+<th>Question</th>
+<th>Conversation</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline</td>
+<td>0.44</td>
+<td>0.32</td>
+<td>0.50</td>
+<td></td>
+</tr>
+<tr>
+<td>Sections</td>
+<td>0.43</td>
+<td>0.29</td>
+<td>0.49</td>
+<td></td>
+</tr>
+<tr>
+<td>Dual encoder</td>
+<td>0.49</td>
+<td>0.34</td>
+<td>0.57</td>
+<td></td>
+</tr>
+<tr>
+<td>Baseline 512 tokens</td>
+<td>0.43</td>
+<td>0.32</td>
+<td>0.49</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>We see that the model is significantly better at ranking conversations than questions, which is quite unexpected. Conversations are usually more noisy and harder to interpret than questions. However, conversations also contain additional information that the model may have benefitted from.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Model / Top 3 MAP</th>
+<th>Total</th>
+<th>Question</th>
+<th>Conversation</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline</td>
+<td>0.36</td>
+<td>0.24</td>
+<td>0.42</td>
+<td></td>
+</tr>
+<tr>
+<td>Sections</td>
+<td>0.33</td>
+<td>0.23</td>
+<td>0.41</td>
+<td></td>
+</tr>
+<tr>
+<td>Dual encoder</td>
+<td>0.40</td>
+<td>0.26</td>
+<td>0.47</td>
+<td></td>
+</tr>
+<tr>
+<td>Baseline 512 tokens</td>
+<td>0.34</td>
+<td>0.23</td>
+<td>0.40</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+  
+
+
+
+<h3 id="barlow-results">Barlow Results</h3><blockquote>
+<p>There is a clear and smooth loss curve. This is particularly promising as, due to the sampling in each new batch, the model will rarely encounter the same data set twice (particularly if there is a large imbalance between the classes).</p>
+</blockquote>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/barlow_loss.png" alt="The loss during Barlow training"></p>
+
+
+
+
+  
+
+
+
+<h3 id="barlow-and-document-ranking">Barlow and Document Ranking</h3><p>We will now compare the three models.</p>
+<ol>
+<li><em>baseline</em> - the Baseline Dual Encoder</li>
+<li><em>zero-shot</em> - the Barlow pre-training Model zero-shot on the training data</li>
+<li><em>pre-trained baseline</em> - the Barlow pre-training model with frozen parameters followed by the Dual Encoder.</li>
+</ol>
+<p>The pretraining&rsquo;s goal was to push questions and conversations together. In order to evaluate this, we will discuss two metrics.</p>
+<ul>
+<li>First, we will qualitatively evaluate the differences in our PCA plots.</li>
+<li>Secondly we will present a table of different distances mesaurements that will allow us to quantify the differences between the models.</li>
+</ul>
+<p>The PCA plots contain the question and conversation centroids for every answer id. Each PCA plot consists of 3 subplots, where each plot varies in the method of PCA.</p>
+<ul>
+<li><em>High dim</em> calculates the centroids in the high dimension embeddings before projecting down to 2D.</li>
+<li><em>Med dim</em> reduces dimensionality to 30 before calculating the centroids then projects down to 2D.</li>
+<li><em>low dim</em> reduces to 2 dimensions before calculating the centroids. This is done to reduce the influence of the dimensionality reduction so that proper conclusions can be drawn.</li>
+</ul>
+<blockquote>
+<p>PCA for Baseline</p>
+</blockquote>
+<blockquote>
+<p>Notice the clear seperation below of questions (1) and conversations (0).</p>
+</blockquote>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/centroids_baseline.png" alt="PCA for baseline"></p>
+<blockquote>
+<p>PCA for Zeroshot</p>
+</blockquote>
+<blockquote>
+<p>While the zeroshot fails document ranking, there is a clear improvement in encouraging closer embeddings in plot. The clear seperation has been removed, although we still see some signs of seperation.</p>
+</blockquote>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/centroids_zeroshot.png" alt="PCA for zeroshot"></p>
+<blockquote>
+<p>PCA for Pre-trained Baseline</p>
+</blockquote>
+<blockquote>
+<p>We see that the pretrained model is slightly more seperated when compared to the zeroshot, but is still better than the baseline. It appears that the model still perserves some of its pretraining after training.</p>
+</blockquote>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/centroids_pretrained.png" alt="PCA for pretrained baseline"></p>
+<p>From the above plots we clearly see that Barlow (and pretraining) accomplish the goals we want when looking at PCA-based metrics. However, we are more interested in the specific <code>answer id</code> groupings. Therefore, we create a table with the following two measurements to confirm the results above:</p>
+<ul>
+<li>a centroid distance, that is the average distance between the question and conversation centroid with the same <code>answer id</code></li>
+<li>the average distance from every query to its corresponding answer.</li>
+</ul>
+<p>Both of these distances are calculated with the embeddings normalized in a range from 0 to 1.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Avg. dist centroid</th>
+<th>Avg. dist to answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline</td>
+<td>2.09</td>
+<td>0.059</td>
+</tr>
+<tr>
+<td>Zero-shot</td>
+<td>1.6</td>
+<td>0.058</td>
+</tr>
+<tr>
+<td>Pretrained Baseline</td>
+<td>1.07</td>
+<td>0.032</td>
+</tr>
+</tbody>
+</table>
+<aside class="notice">
+The average distance centroid is a distance metric in multiple dimensions, which is why it may be above 1 even though the embeddings themselves have been normalized.
+</aside>
+<p>In comparison to the baseline&rsquo;s average distance to centroid:</p>
+<ul>
+<li>we expected the zero-shot model to have a <strong>significantly lower average distance to centroid</strong> since the Barlow Head is purely tasked with generating similar encodings for queries with the same answer id.</li>
+<li>we expected the pre-trained model to have a <strong>lower average distance to centroid</strong>, given that potentially it might spread out some of the encodings in the training head to perform better on Document Ranking.</li>
+</ul>
+<p>From the PCA plots, the zero-shot model and the pretrained baseline that was allowed to train a new head for Document Ranking performed similarly. But in this table we see a clear descending progression in the average distance between centroids. There is about a 0.5 drop between each model. Furthermore, and the pretrained baseline is at approximately a 50% reduction from the baseline. This is counterintutitive because it seems that the model continued to push the embeddings together, even after the initial Barlow head was frozen and the new head was tasked purely with Document Ranking.</p>
+<p>In comparison to the baseline&rsquo;s average distance to answer:</p>
+<ul>
+<li>we expected the zero-shot model to have a  <strong>slightly higher average distance to answer</strong>. While it never directly trains to push the embeddings closer to the answer_id, we expect the groups to move together to middle-cluster that would be closer to the answer on average.</li>
+<li>we expected the pre-trained model to have a <strong>similar average distance to answer</strong>. Since it have the opportunity to train on the answers, we expected it to move closer to the answer than the zero-shot.</li>
+</ul>
+<p>We very oddly find that the average distance to answer is nearly the same as the baseline, without ever having seen the true answer. Moreover, the pretrained baseline also has a 50% reduction compared to the baseline. Overall, it looks like Barlow accomplishes its task of pushing both questions and conversation together, which in turn makes these closer to the answer they point to. In the discussion we will interpret this further.</p>
+<p>From this we would expect that the zero-shot would have similar performance to the baseline, and that the pre-trained baseline would outperform the baselne. However, this was very far from the results we saw.</p>
+<blockquote>
+<p>We see that the pretrained baseline has completely collapsed at the start of training. The pretrained baseline, and the zero-shot at step 0, is totally unequipped for the document ranking task.</p>
+</blockquote>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/pretraining.png" alt="Baseline vs. pretrained baseline"></p>
+<p>While we only depicted top3 accuracy in the above plot, the rest of the metrics look equally poor.</p>
+
+  
+    
+
+
+
+  
+
+
+
 <h1 id="discussion">Discussion</h1>
 
 
@@ -768,7 +992,8 @@ For clarity, question and conversations embeddings will be called "queries".
 
 <h2 id="barlow-with-document-ranking-bert">Barlow with Document Ranking BERT</h2><p>Moreover, we created a simplified, working model of Raffle&rsquo;s Document Ranking BERT. However, as soon as we coupled our barseline with the Barlow Pre-training, the model performed significantly more poorly than the original baseline. In fact, the starting accuracy was nearly 0, giving the same performance as randomly guessing.</p>
 <p>We tried with both frozen and unfrozen parameters being passed from the pretraining model to the training model, but in neither case could we see any improvement. We also hypothesized that this may be because the scaling is off, meaning that the embeddings are in an entirely different scale during pre-training than during training. This led us to implement batch-normalization in all the models to see if there was any improvement. However, the model did not improve.</p>
-<p>Firstly, we consider the possibility that the two models might just not be compatible. Essentially, maybe pushing the embeddings together is simply an inherently poor idea based on a faulty assumption that questions and conversations with the same <code>answer id</code> should lie in the same latent space. This might be a very human intuition that we are imposing on the model, which may not necessarily translate into computer understanding. In fact, we do not even know how closely the two concepts of distance and relative ranking are linked. Potentially there is no correlation at all, and pushing the embeddings together is just an additional &ldquo;hurdle&rdquo; for the model to overcome. We propose that this be studied in Future Work, as an indicator for whether this project should be continued.</p>
+<p>Firstly, we consider the possibility that the two models might just not be compatible. Essentially, maybe pushing the embeddings together is simply an inherently poor idea based on a faulty assumption that questions and conversations with the same <code>answer id</code> should lie in the same latent space. This might be a very human intuition that we are imposing on the model, which may not necessarily translate into computer understanding.</p>
+<p>When looking at the Barlow part of the results section, it looks quite peculiar. We see that Barlow trains nicely, but the model is completely destroyed when document ranking with respect to the pre-decided metrics. But then when we look at the PCA plots and the distance table, the results point to a success. Both the PCA plots show more promising embeddings without a linear seperation, and the distance table clearly shows that the queries are closer in the latent space, both to each other but also to their answer. This appears quite counterintuitive to our metric results.</p>
 <p>We also notice that the pretrained model is more or less broken for the ranking task. This hints to the fact that there might be a problem in the integration between the two models. Raffle.ai has had previous experience with BERT&rsquo;s apparent resistance to pretraining tasks. In other words, there might be a need for a more careful integration, rather than simply passing forward the trained BARLOW head put ontop of BERT which might interfere with BERT&rsquo;s understanding of language. Given our time constraints, these considerations were beyond the scope of this project. We propose this for the future work.</p>
 
   
