@@ -53,12 +53,23 @@ The website is broken down as follows:
     </item>
     
     <item>
+      <title>Metrics</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/metrics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/metrics/</guid>
+      <description># Computes top k accuracy def k_accuracy(scores, answer_ids, target_answer_ids, k): assert k &amp;gt;= 1 if k == 1: prediction_indices = torch.argmax(scores, dim=1) prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids) elif k &amp;gt; 1: prediction_indices = torch.topk(scores, k).indices prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids.unsqueeze(1)).any(1) # Computes top k average precision score def batch_map(relevance, k): top_k = relevance[:, :k] batch_size = top_k.size(0) pos = torch.arange(1, top_k.size(1) + 1, dtype=torch.float).unsqueeze(0).repeat(batch_size, 1).to(top_k.device) csum, num_ans = top_k.</description>
+    </item>
+    
+    <item>
       <title>Timeline</title>
       <link>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</guid>
-      <description> TimelineMikkel&#39;s portion on what we tried </description>
+      <description>TimelineThe project went through 4 overall phases in regards to the construction of the model.
+ Fundamental construction Exploratory Data Analysis (EDA) Generic improvements Barlow Twins  We will skip the majority of the details and focus on the key takeaways of each phase leading up to the final version of our model. This section will thus work as a brief summary of our work.
+1. Fundamental constructionWithout going into much detail, the first part of the project was the implementation, and understandment, of BERT.</description>
     </item>
     
     <item>
@@ -67,7 +78,7 @@ The website is broken down as follows:
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/discussion/</guid>
-      <description>DiscussionNat \ Mikkel  We can see that Barlow Head accomplishes what it needs to do. (it works) but still that it breaks the downstream BERT task. We tried both frozen and unfrozen heads, and in both cases BERT is much worse off with the pretraining than with random initialized weights. We made sure it can&amp;rsquo;t be a scaling issue as everything is normalized.
+      <description>DiscussionNat  We can see that Barlow Head accomplishes what it needs to do. (it works) but still that it breaks the downstream BERT task. We tried both frozen and unfrozen heads, and in both cases BERT is much worse off with the pretraining than with random initialized weights. We made sure it can&amp;rsquo;t be a scaling issue as everything is normalized.
 Take-away, BERT makes its own representations in the encoding space that work well for document ranking, and tweaking these seems to hurt the model.</description>
     </item>
     

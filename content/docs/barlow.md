@@ -21,9 +21,12 @@ Whereas the original Barlow Paper takes a batch of samples and applies noise, in
 ![Barlow 1]({{< baseurl >}}/images/Barlow_1.png)
 
 Now we compute the correlation between f and g. 
-![Barlow 2]({{< baseurl >}}/images/Barlow_2.png)
+![Barlow EQ]({{< baseurl >}}/images/Barlow_eq.png)
 
-Having now computed the correlation matrix, we want to encourage it to resemble the identity matrix. Hereby, we have two terms. In the `invariance_term` we encourage the diagonals to be close to 1 and hereby for the model to be distortion agnostic, while in the `redundancy_reduction_term` we encourage all off-diagonals to be close to 0.
+This yields the following correlation matrix:
+![Barlow Matrix]({{< baseurl >}}/images/Barlow_matrix.png)
+
+Having now computed the correlation matrix, we want to encourage it to resemble the identity matrix. Hereby, we have two terms. In the `invariance_term` we encourage the diagonals (marked in grey) to be close to 1 and hereby for the model to be distortion agnostic, while in the `redundancy_reduction_term` we encourage all off-diagonals to be close to 0.
 
 
 ![Barlow 3]({{< baseurl >}}/images/Barlow_3.png)

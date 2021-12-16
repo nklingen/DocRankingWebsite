@@ -66,7 +66,7 @@
   
     
   
-  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;intro&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;about&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;About&#34;},{&#34;id&#34;:&#34;motivation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Motivation&#34;}],&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;barlow&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;intro-1&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;theory&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Theory&#34;},{&#34;id&#34;:&#34;implementation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Implementation&#34;}],&#34;title&#34;:&#34;Barlow&#34;},{&#34;id&#34;:&#34;bert&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;BERT&#34;},{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;},{&#34;id&#34;:&#34;timeline&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;Timeline&#34;},{&#34;id&#34;:&#34;discussion&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;sub&#34;:[]}],&#34;title&#34;:&#34;Discussion&#34;}])" @scroll.window="onScroll()">
+  <ul id="toc" class="toc-list-h1" x-data="tocController" x-init="load([{&#34;id&#34;:&#34;intro&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;about&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;About&#34;},{&#34;id&#34;:&#34;motivation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Motivation&#34;}],&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;barlow&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;intro-1&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Intro&#34;},{&#34;id&#34;:&#34;theory&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Theory&#34;},{&#34;id&#34;:&#34;implementation&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Implementation&#34;}],&#34;title&#34;:&#34;Barlow&#34;},{&#34;id&#34;:&#34;bert&#34;,&#34;level&#34;:1,&#34;sub&#34;:[],&#34;title&#34;:&#34;BERT&#34;},{&#34;id&#34;:&#34;model&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;bert-base&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;BERT Base&#34;},{&#34;id&#34;:&#34;barlow-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Barlow Head&#34;},{&#34;id&#34;:&#34;ranking-head&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Ranking Head&#34;},{&#34;id&#34;:&#34;pre-training-model&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;Pre-training Model&#34;},{&#34;id&#34;:&#34;training-model&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;Training Model&#34;}],&#34;title&#34;:&#34;Model&#34;},{&#34;id&#34;:&#34;timeline&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;id&#34;:&#34;1-fundamental-construction&#34;,&#34;level&#34;:2,&#34;title&#34;:&#34;1. Fundamental construction&#34;},{&#34;id&#34;:&#34;2--exploratory-data-analysis&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;21-answer-ids&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;2.1 Answer ids&#34;},{&#34;id&#34;:&#34;22-dataset-imbalance&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;2.2 Dataset imbalance&#34;},{&#34;id&#34;:&#34;23-pca&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;2.3 PCA&#34;}],&#34;title&#34;:&#34;2.  Exploratory Data Analysis&#34;},{&#34;id&#34;:&#34;3-generic-improvements&#34;,&#34;level&#34;:2,&#34;sub&#34;:[{&#34;id&#34;:&#34;31-preprocessing&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;3.1 Preprocessing&#34;},{&#34;id&#34;:&#34;32-dual-encoder&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;3.2 Dual encoder&#34;},{&#34;id&#34;:&#34;33-gradient-clipping-l2-regularization--batch-normalization&#34;,&#34;level&#34;:3,&#34;title&#34;:&#34;3.3 Gradient clipping, L2 regularization \u0026amp; batch normalization&#34;}],&#34;title&#34;:&#34;3. Generic improvements&#34;},{&#34;id&#34;:&#34;4-barlow-twins&#34;,&#34;level&#34;:2,&#34;sub&#34;:[],&#34;title&#34;:&#34;4. Barlow Twins&#34;}],&#34;title&#34;:&#34;Timeline&#34;},{&#34;id&#34;:&#34;discussion&#34;,&#34;level&#34;:1,&#34;sub&#34;:[{&#34;sub&#34;:[]}],&#34;title&#34;:&#34;Discussion&#34;}])" @scroll.window="onScroll()">
     
     <template x-for="row in rows">
       <li>
@@ -102,6 +102,8 @@
       <div class="dark-box"></div>
       <div class="content">
         
+  
+    
   
     
   
@@ -204,8 +206,10 @@
 <h2 id="theory">Theory</h2><p>Whereas the original Barlow Paper takes a batch of samples and applies noise, in our implementation we already have the distorted matrices. For a given <code>answer_id</code>, this is simply a batch with associated questions (f), and a batch with associated conversations (g). In our dataloader, we ensure the batches are of equal size.</p>
 <p><img src="https://nklingen.github.io/DocRankingWebsite//images/Barlow_1.png" alt="Barlow 1"></p>
 <p>Now we compute the correlation between f and g.
-<img src="https://nklingen.github.io/DocRankingWebsite//images/Barlow_2.png" alt="Barlow 2"></p>
-<p>Having now computed the correlation matrix, we want to encourage it to resemble the identity matrix. Hereby, we have two terms. In the <code>invariance_term</code> we encourage the diagonals to be close to 1 and hereby for the model to be distortion agnostic, while in the <code>redundancy_reduction_term</code> we encourage all off-diagonals to be close to 0.</p>
+<img src="https://nklingen.github.io/DocRankingWebsite//images/Barlow_eq.png" alt="Barlow EQ"></p>
+<p>This yields the following correlation matrix:
+<img src="https://nklingen.github.io/DocRankingWebsite//images/Barlow_matrix.png" alt="Barlow Matrix"></p>
+<p>Having now computed the correlation matrix, we want to encourage it to resemble the identity matrix. Hereby, we have two terms. In the <code>invariance_term</code> we encourage the diagonals (marked in grey) to be close to 1 and hereby for the model to be distortion agnostic, while in the <code>redundancy_reduction_term</code> we encourage all off-diagonals to be close to 0.</p>
 <p><img src="https://nklingen.github.io/DocRankingWebsite//images/Barlow_3.png" alt="Barlow 3"></p>
 
 
@@ -486,6 +490,36 @@ Nat : Brief section on how BERT was implemented
 <p>Moreover, the training-model includes a method <code>set_pretrain_model_to_eval</code> that is called from the main script. When the Training Model is set to train mode, we want to ensure that only the ranking head is actually in train mode, while all frozen pre-training sub-models remain in eval mode. Thus, <code>set_pretrain_model_to_eval</code> sets the <a href="#pre-training-model">pre-training model</a> back to eval.</p>
 
   
+    <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Computes top k accuracy</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">k_accuracy</span>(scores, answer_ids, target_answer_ids, k):
+    <span style="color:#66d9ef">assert</span>  k <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">if</span>  k <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        prediction_indices <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(scores, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+        prediction_answer_ids <span style="color:#f92672">=</span> answer_ids[prediction_indices]
+        <span style="color:#66d9ef">return</span> (prediction_answer_ids <span style="color:#f92672">==</span> target_answer_ids)
+    <span style="color:#66d9ef">elif</span>  k <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>:
+        prediction_indices <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>topk(scores, k)<span style="color:#f92672">.</span>indices
+        prediction_answer_ids <span style="color:#f92672">=</span> answer_ids[prediction_indices]
+        <span style="color:#66d9ef">return</span> (prediction_answer_ids <span style="color:#f92672">==</span> target_answer_ids<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>any(<span style="color:#ae81ff">1</span>)
+
+<span style="color:#75715e"># Computes top k average precision score</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">batch_map</span>(relevance, k):
+    top_k <span style="color:#f92672">=</span> relevance[:, :k]
+    batch_size <span style="color:#f92672">=</span> top_k<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+    pos <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>, top_k<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>repeat(batch_size, <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>to(top_k<span style="color:#f92672">.</span>device)
+    csum, num_ans <span style="color:#f92672">=</span> top_k<span style="color:#f92672">.</span>cumsum(<span style="color:#ae81ff">1</span>), top_k<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span>)
+    apk <span style="color:#f92672">=</span> ((csum <span style="color:#f92672">/</span> pos <span style="color:#f92672">*</span> top_k)<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> num_ans)
+    apk <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>masked_select(apk, <span style="color:#f92672">~</span>torch<span style="color:#f92672">.</span>isnan(apk))
+    <span style="color:#66d9ef">return</span>  apk<span style="color:#f92672">.</span>sum()
+</code></pre></div><p>We log 3 types of metrics: loss, accuracy and average precision (MAP).</p>
+<ul>
+<li>LOSS: we log both the validation and train loss, so that we can watch for signs of overfitting.</li>
+<li>ACCURACY and MAP: When we say top <em>k</em> we measure a success criteria as each instance where  the correct answer id lies in the top <em>k</em> ranking.</li>
+</ul>
+<p>MAP penalises answers lower in the ranking while accuracy is blind to this.
+We log these metrics with respect to questions only, conversations only, and both overall. We decided to log metrics seperately for the input types, as this project aims to increase the general performance of the model, meaning that one type should not be significantly worse than the other. Thus, it was important for us to track how our changes affected each individual type. Furthermore, we loG accuracy and MAP with k = 3, k = 10, as well as k = 1 for accuracy.</p>
+
+  
     
 
 
@@ -494,9 +528,203 @@ Nat : Brief section on how BERT was implemented
 
 
 
-<h1 id="timeline">Timeline</h1><aside class="notice">
-Mikkel's portion on what we tried
-</aside>
+<h1 id="timeline">Timeline</h1><p>The project went through 4 overall phases in regards to the construction of the model.</p>
+<ol>
+<li>Fundamental construction</li>
+<li>Exploratory Data Analysis (EDA)</li>
+<li>Generic improvements</li>
+<li>Barlow Twins</li>
+</ol>
+<p>We will skip the majority of the details and focus on the key takeaways of each phase leading up to the final version of our model. This section will thus work as a brief summary of our work.</p>
+
+
+
+
+  
+
+
+
+<h2 id="1-fundamental-construction">1. Fundamental construction</h2><p>Without going into much detail, the first part of the project was the implementation, and understandment, of BERT. The two key decisions in this phase was freezing BERT and only using the CLS tokens. The decision to freeze BERT parameters was primarily taken to increase speed, which is crucial in the early stages of development, with a small sacrifice in accuracy. Unfreezing BERT would have likely increased performance, but for the sake of consistency, we kept it frozen. The second decision was using only the CLS tokens. As one knows, the CLS token is the classification tokens. In such, the CLS token can be said to encapsulate all the information of the sentences, a summary or topic so to say. We deemed this token very important when ranking and was therefore our main, and only, source of information. However, as we will discuss later, this can also come with consequences.</p>
+
+
+
+
+  
+
+
+
+<h2 id="2--exploratory-data-analysis">2.  Exploratory Data Analysis</h2><p>The input data contains 4 main pieces of information. The title, the content, the type (questions or conversations) and answer id (the &ldquo;true&rdquo; label). Each piece of information should be analysed due to its importance. Grouping title and content together, in a group that can be called text, we end up with 3 types of information that must be analyzed. The answer ids can tell us something about the grouping of information, the question type can tell the balance of a dataset and the text can show whether questions and conversations are seperated.</p>
+
+
+
+
+  
+
+
+
+<h3 id="21-answer-ids">2.1 Answer ids</h3><p>With some qualitative analysis, we investigated the assumption that input data which points to the same answer is about the same. This assumption is hard to fully investigate, but the crude investigated showed that the assumption is not completely off. However, to say that the assumption is true would be wrong. Based on this, we choose to apply the assumption, since it reduces the complexity of the problem and allows us to group the input data more easily.</p>
+
+
+
+
+  
+
+
+
+<h3 id="22-dataset-imbalance">2.2 Dataset imbalance</h3><p>The datasets (train and validation) are heavily skewed, having about 10 times the amount of conversations as opposed to questions. By including the generated questions, we get to a 2/3 split of conversations and questions, giving a more balanced dataset. Furthermore, we investigated casting short conversations as questions, as some conversations can be as short as a single sentence, esssentially making them a question. We chose to cast conversations with less than 100 characters into questions, making an almost perfectly balanced dataset. The balanced dataset is also crucial for the Barlow implementation later.</p>
+
+
+
+
+  
+
+
+
+<h3 id="23-pca">2.3 PCA</h3><p>In order to investigate whether questions and conversations, that has the same answer id, lie closely to eachother in latent space, we applied PCA to reduce the dimensionality down to 2D in order to visualize it. There was two main takeaways from the PCA plots. Firstly, there didn&rsquo;t appear to be distinct groupings based on answer ids and the embeddings was scattered in the latent space. There were certain areas with higher density of the same answer ids, but nothing that indicated seperation. Secondly, questions and conversations were not seperated and laid ontop of eachother. Howewer, conversatons were spread over the entire latent space, but questions appeared to be more clustered in certain areas. This might mean that BERT somewhat distinguishes between conversations and questions at a certain level.</p>
+
+
+
+
+  
+
+
+
+<h2 id="3-generic-improvements">3. Generic improvements</h2>
+
+
+
+  
+
+
+
+<h3 id="31-preprocessing">3.1 Preprocessing</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">TFIDF_standard</span>(data):
+    <span style="color:#75715e"># capture the title and content</span>
+    title <span style="color:#f92672">=</span> [x[<span style="color:#e6db74">&#34;title&#34;</span>] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> data]
+    content <span style="color:#f92672">=</span> [x[<span style="color:#e6db74">&#34;content&#34;</span>] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> data]
+
+    <span style="color:#75715e"># split by words</span>
+    vectorizer <span style="color:#f92672">=</span> TfidfVectorizer(token_pattern<span style="color:#f92672">=</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;(?u)\b\w+\b&#39;</span>)
+    lookup <span style="color:#f92672">=</span> vectorizer<span style="color:#f92672">.</span>fit(content)<span style="color:#f92672">.</span>vocabulary_
+
+    input_string <span style="color:#f92672">=</span> []
+    word_split <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;(?u)\b\w+\b&#39;</span>)
+    tokenizer <span style="color:#f92672">=</span> nltk<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;tokenizers/punkt/english.pickle&#39;</span>)
+
+    <span style="color:#66d9ef">for</span> i, document <span style="color:#f92672">in</span> enumerate(content):
+        <span style="color:#75715e"># split document into sentencces</span>
+        sentences <span style="color:#f92672">=</span> tokenizer<span style="color:#f92672">.</span>tokenize(document)
+        sentence_scores <span style="color:#f92672">=</span> []
+        <span style="color:#66d9ef">for</span> sentence <span style="color:#f92672">in</span> sentences:
+            score <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+            words <span style="color:#f92672">=</span> word_split<span style="color:#f92672">.</span>findall(sentence<span style="color:#f92672">.</span>lower())
+            <span style="color:#75715e"># split sentence into words and compute the total tf-idf score per sentence</span>
+            <span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> words:
+                score <span style="color:#f92672">+=</span> lookup[word]
+
+            <span style="color:#75715e"># Relative score per word (incase of weird sentences (double periods) we have the if statement)</span>
+            <span style="color:#66d9ef">if</span> len(words) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>: 
+                score <span style="color:#f92672">/=</span> len(words)
+            sentence_scores<span style="color:#f92672">.</span>append(score)
+
+        <span style="color:#75715e"># Relative score per character for each sentence</span>
+        sentence_scores <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(sentence_scores)
+        <span style="color:#75715e"># Ranking of which sentence had the most important characters per length.</span>
+        sorted_indices <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argsort(sentence_scores)
+
+        current_length <span style="color:#f92672">=</span> len(word_split<span style="color:#f92672">.</span>findall(title[i]))
+        kept_indices <span style="color:#f92672">=</span> []
+
+        <span style="color:#75715e"># Greedy Knapsack solution to add sentences per average char weight</span>
+        <span style="color:#66d9ef">for</span> index <span style="color:#f92672">in</span> sorted_indices:
+            word_count <span style="color:#f92672">=</span> word_split<span style="color:#f92672">.</span>findall(sentences[index])
+            <span style="color:#66d9ef">if</span> current_length <span style="color:#f92672">&lt;</span> TFIDF_answer_length:
+                kept_indices<span style="color:#f92672">.</span>append(index)
+                current_length <span style="color:#f92672">+=</span> len(word_count)
+
+        <span style="color:#75715e"># rearrange the sentences from (most -&gt; least important) to original order</span>
+        final_string <span style="color:#f92672">=</span> title[i] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span>
+        <span style="color:#66d9ef">for</span> index <span style="color:#f92672">in</span> sorted(kept_indices):
+            final_string <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> sentences[index]
+        input_string<span style="color:#f92672">.</span>append(final_string)
+        
+    <span style="color:#66d9ef">return</span>  input_string
+</code></pre></div><p>As the input has to be of limited size, mainly due to speed and to reduce noise, we implement preprocessing to the input, so that we feed BERT with the, hopefully, most useful information. In order to do so, we applied TF-IDF in order to include the sentences with the most importance. Each sentence is scored by the relative score per word, which means summing each word&rsquo;s TF-IDF score and dividing by the number of words for the sentence. We then take the most important sentences, up to 128 tokens, and feed this to the model.</p>
+<p>A potential improvement was to utilize the sections.json, so that there was an equal amount of sentences per section, however this implementation did not yield any significant improvements. Moreover, increasing the amount of tokens, from 128 up to 258 and 512, also did not yield any significant improvements. Instead it merely increased runtime by a significant factor (Twice the amount of data takes about twice the amount of time).</p>
+
+
+
+
+  
+
+
+
+<h3 id="32-dual-encoder">3.2 Dual encoder</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span>  <span style="color:#a6e22e">train</span>(model, model_answers, optimizer, criterion, data_loader, answer_loader, cls_dictionary):
+    answer_tokens <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack(list(cls_dictionary<span style="color:#f92672">.</span>values()))<span style="color:#f92672">.</span>to(device)
+    answer_ids <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(list(cls_dictionary<span style="color:#f92672">.</span>keys()))<span style="color:#f92672">.</span>to(device)
+    
+    <span style="color:#75715e"># Metrics</span>
+    total_loss <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    
+    model<span style="color:#f92672">.</span>train()
+    model_answers<span style="color:#f92672">.</span>train()
+
+    answer_iterator <span style="color:#f92672">=</span> iter(answer_loader)
+
+    <span style="color:#66d9ef">for</span>  step, (data_batch) <span style="color:#f92672">in</span>  enumerate(data_loader):
+        <span style="color:#75715e"># Keep updating the stale index (multiple updates for each ID each training step)</span>
+        answer_batch <span style="color:#f92672">=</span> next(answer_iterator)
+
+        <span style="color:#75715e"># clear previously calculated gradients</span>
+        optimizer<span style="color:#f92672">.</span>zero_grad()
+
+        <span style="color:#e6db74">&#39;&#39;&#39; Answer batch &#39;&#39;&#39;</span>
+        answer_encoding, _, attention_mask, batch_ids <span style="color:#f92672">=</span> answer_batch
+        new_answer_tokens  <span style="color:#f92672">=</span> model_answers(answer_encoding, attention_mask)
+
+        <span style="color:#75715e"># Only update the relevant answer_tokens</span>
+        answer_tokens[(answer_ids <span style="color:#f92672">==</span> batch_ids<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>nonzero()[:,<span style="color:#ae81ff">1</span>]] <span style="color:#f92672">=</span> new_answer_tokens
+
+        <span style="color:#e6db74">&#39;&#39;&#39; Data batch &#39;&#39;&#39;</span>
+        input_encoding, _, attention_mask, target_answer_ids, question_type <span style="color:#f92672">=</span> data_batch
+        question_tokens <span style="color:#f92672">=</span> model(input_encoding, attention_mask)
+
+        <span style="color:#75715e"># Calculate scores (batch_tokens vs stale_index_tokens)</span>
+        scores <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>matmul(question_tokens, answer_tokens<span style="color:#f92672">.</span>T)
+        target_answer_indices <span style="color:#f92672">=</span> (answer_ids <span style="color:#f92672">==</span> target_answer_ids<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>nonzero()[:, <span style="color:#ae81ff">1</span>]
+
+        <span style="color:#e6db74">&#39;&#39;&#39; Compute loss &#39;&#39;&#39;</span>
+        loss <span style="color:#f92672">=</span> criterion(scores, target_answer_indices)
+        loss<span style="color:#f92672">.</span>backward()
+        
+        <span style="color:#75715e"># Gradient clipping</span>
+        torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>clip_grad_norm_(model<span style="color:#f92672">.</span>parameters(), <span style="color:#ae81ff">1</span>)
+        
+        optimizer<span style="color:#f92672">.</span>step()
+        
+        <span style="color:#75715e"># Important to detach from graph</span>
+        answer_tokens<span style="color:#f92672">.</span>detach_()
+        
+        total_loss <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+</code></pre></div><p>A significant improvement was seen when implementing a dual encoder setup. The setup uses two different heads, one for the input data and one for the answers. During a training step the model will update part of the stale index and this updated stale index is used to calculate the scores of the input data. In such, we collect gradients from both the indexing of answers and the scoring of questions and conversations. There is still only calculate a single loss based on the scoring, but this loss is backpropagated into two seperate heads now.</p>
+<p>This implementation had a more gradual learning curve, starting off worse than the other models, but was also to train for longer (10-20 epochs before stagnating) and giving significant improvements on all metrics. Most noticably, the dual encoder implementation surpasses the other models before the stagnate. This means that the dual encoders increased performance is not just due to the longer training. Stopping the dual encoder model at the same point as the others would have also yielded significant improvements.</p>
+
+
+
+
+  
+
+
+
+<h3 id="33-gradient-clipping-l2-regularization--batch-normalization">3.3 Gradient clipping, L2 regularization &amp; batch normalization</h3><p>We apply some of the common deep learning improvements, such as gradient clipping, l2 regularization and batch normalization. Without much investigation in these, we saw immediate improvements. These techniques help us stabilize the learning and prevent overfitting.</p>
+
+
+
+
+  
+
+
+
+<h2 id="4-barlow-twins">4. Barlow Twins</h2>
   
     
 
@@ -507,10 +735,16 @@ Mikkel's portion on what we tried
 
 
 <h1 id="discussion">Discussion</h1><aside class="notice">
-Nat \ Mikkel
+Nat
 </aside>
 <p>We can see that Barlow Head accomplishes what it needs to do. (it works) but still that it breaks the downstream BERT task. We tried both frozen and unfrozen heads, and in both cases BERT is much worse off with the pretraining than with random initialized weights. We made sure it can&rsquo;t be a scaling issue as everything is normalized.</p>
 <p>Take-away, BERT makes its own representations in the encoding space that work well for document ranking, and tweaking these seems to hurt the model. Maybe moving questions and conversations together is an idea that makes sense from a human perspective, but interferes with the models deeper understanding of the datatypes. We don&rsquo;t deeply understand how the model represents the data.</p>
+<aside class="notice">
+Mikkel
+</aside>
+<p>Seeing as project did not yield any improvements and instead significantly worsen it, the question to ask is why. Why does BERT and Barlow work seperately, but completely fail when coupled.</p>
+<p>One of the reasons can be the assumption that questions and conversations with the same <code>answer id</code> should lie in the same latent space. This might be a very human intuition that does not necessarily translate into computer understanding. Moreover, our decision to only include the CLS token might also influence this. The CLS token is the classification token and BERT&rsquo;s understanding of classification might differ from humans. Even though a topic may be the same for a question and a conversation, the language in short and concise text (questions) might put it into a different classification than noisy and long text (conversations).</p>
+<p>Secondly, we notice that the pretrained model is more or less broken for the ranking task. The model totally fails and has an accuracy slightly above 0%, much less than BERT achieves. This hints to the fact that there might be a fundamental problem, not just that Barlow might be a wrong assumption. Raffle.ai has had previous experience with BERT&rsquo;s apparent resistance to pretraining tasks. The underlying problem with pretraining might be that it interfers too much with the fundamental understandment of language by BERT. Additionally, there might be a need for special integration, rather than a trained head put ontop of BERT. However, these considerations requires much energy to investigate and we leave this for the future work.</p>
 
   
 
