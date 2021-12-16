@@ -134,6 +134,22 @@ We apply some of the common deep learning improvements, such as gradient clippin
 
 Later, we also exchanged the gradient clipping after the model terminates with batch normalization in between the blocks of the model. 
 
+### Hyperparameter Tuning
+
+In order to fix a model for our expeirments we found a set of parameters using hyperparameter tuning. We tune with respect to the validation loss over 4 parameters: dropout rate, learning rate, batch size and weight decay. We utilized 'Weights & Biases' automatic hyperparameter tuning (sweeps) and chose to us Bayes optimisation to optimise the search. We do the sweep on the *baseline* model described above.
+
+![Overview of all the runs]({{< baseurl >}}/images/sweep.jpg)
+
+We fix the `max_length=128`, i.e. the amount of tokens fed to BERT, and the max number of `epochs=50`. The sweep finds the following parameters:
+
+`batch size=50`
+`dropout=0.11`
+`learning rate=1.4e-4`
+`weight decay=9.3e-4`
+
+Moreover, 'Weights & Biases' tells us the importance and correlation of each parameter. It clearly shows the learning rate being the most influential, which is expected due to its large impact on training.
+
+![Parameter importance]({{< baseurl >}}/images/param_importance.png)
 
 ## Barlow Twins
 
