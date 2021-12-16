@@ -4,8 +4,8 @@ title: Metrics
 ---
 
 # Metrics 
+> To compute top k accuracy
 ```python
-# Computes top k accuracy
 def k_accuracy(scores, answer_ids, target_answer_ids, k):
     assert  k >= 1
     if  k == 1:
@@ -16,8 +16,9 @@ def k_accuracy(scores, answer_ids, target_answer_ids, k):
         prediction_indices = torch.topk(scores, k).indices
         prediction_answer_ids = answer_ids[prediction_indices]
         return (prediction_answer_ids == target_answer_ids.unsqueeze(1)).any(1)
-
-# Computes top k average precision score
+```
+> To compute top k average precision score (from Raffle's codebase)
+```python
 def batch_map(relevance, k):
     top_k = relevance[:, :k]
     batch_size = top_k.size(0)
@@ -29,8 +30,32 @@ def batch_map(relevance, k):
 ```
 
 We log 3 types of metrics: loss, accuracy and average precision (MAP). 
-* LOSS: we log both the validation and train loss, so that we can watch for signs of overfitting. 
-* ACCURACY and MAP: When we say top *k* we measure a success criteria as each instance where  the correct answer id lies in the top *k* ranking. 
 
-MAP penalises answers lower in the ranking while accuracy is blind to this.
-We log these metrics with respect to questions only, conversations only, and both overall. We decided to log metrics seperately for the input types, as this project aims to increase the general performance of the model, meaning that one type should not be significantly worse than the other. Thus, it was important for us to track how our changes affected each individual type. Furthermore, we loG accuracy and MAP with k = 3, k = 10, as well as k = 1 for accuracy. 
+<aside class="notice">
+When we say top *k* we measure a success criteria as each instance where the correct answer id lies in the *k* top scores. Whereas accuracy is blind to how high the relative score was, as long as it still falls in the top k, MAP will still (slightly) penalize correct answers that weren't ranked highly enough. 
+</aside>
+
+
+- Loss
+    * Validation Loss
+    * Train loss
+- Accuracy
+    * Questions
+        * k = 1, k = 3, k = 10
+    * Conversations
+        * k = 1, k = 3, k = 10
+    * Overall
+        * k = 1, k = 3, k = 10
+- MAP
+    * Questions
+        * k = 3, k = 10
+    * Conversations
+        * k = 3, k = 10
+    * Overall
+        * k = 3, k = 10
+
+As our project aims to increase the general performance of the model, this means that we want to identify if one query type is significantly worse than the other. Thus, it was important for us to track how our changes to the model affected each of the query types. Moreover, we specifically looked at the accuracy top 3 metrics to compare with Raffle's own model. Lastly, we used the loss metrics to monitor for signs of overfitting. 
+
+
+
+

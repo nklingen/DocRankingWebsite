@@ -5,11 +5,11 @@ title: Timeline
 ---
 
 # Timeline
-This section will be a general summary of our work and the evolution of the project. The project went through 4 overall phases in regards to the construction of the model. 
+This section will be a general summary of our work and the evolution of the project. The project went through 3 overall phases in regards to the construction of the model. 
 
-2. Exploratory Data Analysis (EDA)
-3. Document Ranking Model
-4. Barlow Twins
+1. Exploratory Data Analysis (EDA)
+2. Document Ranking Model
+3. Barlow Twins
 
 ## Exploratory Data Analysis
 The input data contains 4 main pieces of information. The title, the content, the type (questions or conversations) and answer id (the "true" label). Each piece of information should be analysed due to its importance. Grouping title and content together, in a group that can be called text, we end up with 3 types of information that must be analyzed. The answer ids can tell us something about the grouping of information, the question type can tell the balance of a dataset and the text can show whether questions and conversations are seperated. 
@@ -97,26 +97,32 @@ Moreover, we also attempted to increase the amount of tokens from 128 to 258 and
 
 ### BERT with one head
 
-For clarity, question and conversations embeddings will be called "queries" in this section.
+<aside class="notice">
+For clarity, question and conversations embeddings will be called "queries".
+</aside>
 
-We will now discuss some design choices in implementing BERT. Namely, the two key decisions in this phase were **freezing BERT** and **only using the CLS tokens**. 
-* The decision to freeze BERT parameters was primarily taken to increase speed and avoid running into issues of memory constraint, which was crutial for us given this was a short-term research project and we had GPU resource constraints. We knew this would entail a decrease in accuracy. Unfreezing BERT and adapting the model for all experiments would have likely increased performance. 
-* The second decision was using only the CLS tokens. Briefly, the CLS token is first column of the BERT output, typically used for classification tasks. The CLS token can be said to encapsulate all the information of the input, to give a sort of general summary. We deemed this token most important for ranking. Thus, given the same speed and memory constraints, we chose to only use the CLS token and discard the rest of the BERT output. However, as we will discuss later, this can also come with consequences. 
-
-The model was implemented as follows 
+The model was implemented as follows:
 
 1. Compute the answer Database
 We passed the answers through a BERT model with a head to get a database of answer encodings. 
 2. Compute the query embeddings
 Next, we passed the questions and conversations through the same BERT model with the same head to get their encodings. 
+
+![BERT 1]({{< baseurl >}}/images/BERT1.png)
+
 3. Document Ranking
     * To compute most related documents for a given query, we compute the cross product between the query embeddings and the entire answer database. 
     * We then find the argmax for each query, that is the answer document that had the highest score for that query.
     * We return the index of the argmax.
 
-<aside class="notice">
+![BERT 2]({{< baseurl >}}/images/BERT2.png)
+
 This is a simplified explanation for the instance where k=1. To compute the top k most relevant documents, the indices of the top k argmax elements are returned for each query.
-</aside>
+
+We will also discuss some design choices in implementing BERT. Namely, the two key decisions in this phase were **freezing BERT** and **only using the CLS tokens**. 
+
+* The decision to freeze BERT parameters was primarily taken to increase speed and avoid running into issues of memory constraint, which was crutial for us given this was a short-term research project and we had GPU resource constraints. We knew this would entail a decrease in accuracy. Unfreezing BERT and adapting the model for all experiments would have likely increased performance. 
+* The second decision was using only the CLS tokens. Briefly, the CLS token is first column of the BERT output, typically used for classification tasks. The CLS token can be said to encapsulate all the information of the input, to give a sort of general summary. We deemed this token most important for ranking. Thus, given the same speed and memory constraints, we chose to only use the CLS token and discard the rest of the BERT output. However, as we will discuss later, this can also come with consequences. 
 
 ### BERT with Dual Encoder
 
@@ -161,12 +167,7 @@ def  train(model, model_answers, optimizer, criterion, data_loader, answer_loade
 
 A significant improvement was seen when implementing a dual encoder setup. The setup uses two different heads, one for the query data and one for the answers. During a training step the model will update part of the stale index, as seen in the code to the right. This updated stale index is used to score the given document for new incoming queries. In such, we collect gradients from both the indexing of answers and the scoring of questions and conversations (but later detach the model for the answers). We only calculate a single loss based on the scoring, and then backpropagate this loss onto the two seperate heads. 
 
-<aside class="notice">
-Move to results ??
-</aside>
-
-This implementation had a more gradual learning curve, starting off worse than the other models, but was also to train for longer (10-20 epochs before stagnating) and giving significant improvements on all metrics. Most noticably, the dual encoder implementation surpasses the other models before they stagnate. This means that the dual encoders increased performance is not just due to the longer training. Stopping the dual encoder model at the same point as the others would have also yielded significant improvements. 
-
+![BERT 3]({{< baseurl >}}/images/BERT3.png)
 
 ### Gradient clipping, L2 regularization & batch normalization
 We apply some of the common deep learning improvements, such as gradient clipping, and l2 regularization, and saw immediate improvements. These techniques help us stabilize the learning and prevent overfitting. 
@@ -175,7 +176,9 @@ Later, we also exchanged the gradient clipping after the model terminates with b
 
 ### Hyperparameter Tuning
 
-In order to fix a model for our expeirments we found a set of parameters using hyperparameter tuning. We tune with respect to the validation loss over 4 parameters: dropout rate, learning rate, batch size and weight decay. We utilized 'Weights & Biases' automatic hyperparameter tuning (sweeps) and chose to us Bayes optimisation to optimise the search. We do the sweep on the *baseline* model described above.
+As the graphics are a bit small, the entire Hyperparameter Tuning Sweep can be found [here](https://wandb.ai/nklingen/BERT_Question_Answering/reports/Hyperparameter-Tuning-Baseline--VmlldzoxMTQ0OTE5).
+
+In order to fix a model for our expeirments we found a set of parameters using hyperparameter tuning. We tune with respect to the validation loss over 4 parameters: dropout rate, learning rate, batch size and weight decay. We utilized 'Weights & Biases' automatic hyperparameter tuning (sweeps) and chose to us Bayes optimisation to optimise the search. We do the sweep on the *Dual Encoder* model described above.
 
 ![Overview of all the runs]({{< baseurl >}}/images/sweep.jpg)
 

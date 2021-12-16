@@ -23,8 +23,8 @@ The website is broken down as follows:
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</guid>
-      <description>TimelineThis section will be a general summary of our work and the evolution of the project. The project went through 4 overall phases in regards to the construction of the model.
-Exploratory Data Analysis (EDA) Document Ranking Model Barlow Twins  Exploratory Data AnalysisThe input data contains 4 main pieces of information. The title, the content, the type (questions or conversations) and answer id (the &amp;ldquo;true&amp;rdquo; label). Each piece of information should be analysed due to its importance.</description>
+      <description>TimelineThis section will be a general summary of our work and the evolution of the project. The project went through 3 overall phases in regards to the construction of the model.
+ Exploratory Data Analysis (EDA) Document Ranking Model Barlow Twins  Exploratory Data AnalysisThe input data contains 4 main pieces of information. The title, the content, the type (questions or conversations) and answer id (the &amp;ldquo;true&amp;rdquo; label). Each piece of information should be analysed due to its importance.</description>
     </item>
     
     <item>
@@ -33,7 +33,9 @@ Exploratory Data Analysis (EDA) Document Ranking Model Barlow Twins  Exploratory
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/metrics/</guid>
-      <description>Metrics# Computes top k accuracy def k_accuracy(scores, answer_ids, target_answer_ids, k): assert k &amp;gt;= 1 if k == 1: prediction_indices = torch.argmax(scores, dim=1) prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids) elif k &amp;gt; 1: prediction_indices = torch.topk(scores, k).indices prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids.unsqueeze(1)).any(1) # Computes top k average precision score def batch_map(relevance, k): top_k = relevance[:, :k] batch_size = top_k.size(0) pos = torch.arange(1, top_k.size(1) + 1, dtype=torch.float).unsqueeze(0).repeat(batch_size, 1).to(top_k.device) csum, num_ans = top_k.</description>
+      <description>Metrics To compute top k accuracy
+ def k_accuracy(scores, answer_ids, target_answer_ids, k): assert k &amp;gt;= 1 if k == 1: prediction_indices = torch.argmax(scores, dim=1) prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids) elif k &amp;gt; 1: prediction_indices = torch.topk(scores, k).indices prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids.unsqueeze(1)).any(1)  To compute top k average precision score (from Raffle&amp;rsquo;s codebase)
+ def batch_map(relevance, k): top_k = relevance[:, :k] batch_size = top_k.size(0) pos = torch.</description>
     </item>
     
     <item>
