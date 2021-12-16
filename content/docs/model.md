@@ -1,6 +1,6 @@
 
 ---
-weight: 4
+weight: 5
 title: Model
 ---
 
@@ -40,13 +40,8 @@ class BERT(nn.Module):
         for param in self.bert.parameters():
             param.requires_grad = False
 
-
-    # define the forward pass
     def forward(self, input_id, mask):
-
-        # Bert
         BERT_output = self.bert(input_id, attention_mask=mask)
-
         return BERT_output
 ```
 
@@ -62,32 +57,19 @@ class barlow_HEAD(nn.Module):
 
     def __init__(self, config):
         super(barlow_HEAD, self).__init__()
-        # dropout layer
         self.dropout = nn.Dropout(config.dropout)
-        # relu activation function
         self.relu = nn.ReLU()
-        # dense layer 1
         self.fc1 = nn.Linear(768, 768)
-        # dense layer 2 (Output layer)
         self.fc2 = nn.Linear(768, 768)
-        # batch norm fc1
         self.bn1 = nn.BatchNorm1d(768)
-        # batch norm fc2
         self.bn2 = nn.BatchNorm1d(768)
 
     def forward(self, BERT_output):
-
-        # capture cls
         cls = BERT_output.last_hidden_state[:, 0, :]
-        # FC 1 + batch norm
         x = self.bn1(self.fc1(cls))
-        # relu activatiom
         x = self.relu(x)
-        # dropout
         x = self.dropout(x)
-        # FC 2 + batch norm
         x = self.bn2(self.fc2(x))
-
         return x
 ```
 
@@ -108,30 +90,18 @@ class ranking_HEAD(nn.Module):
 
     def __init__(self, config):
         super(ranking_HEAD, self).__init__()
-        # dropout layer
         self.dropout = nn.Dropout(config.dropout)
-        # relu activation function
         self.relu = nn.ReLU()
-        # dense layer 1
         self.fc1 = nn.Linear(768, 768)
-        # dense layer 2 (Output layer)
         self.fc2 = nn.Linear(768, 768)
-        # batch norm fc1
         self.bn1 = nn.BatchNorm1d(768)
-        # batch norm fc2
         self.bn2 = nn.BatchNorm1d(768)
 
     def forward(self, x):
-
-        # FC 1 + batch norm
         x = self.bn1(self.fc1(x))
-        # relu activatiom
         x = self.relu(x)
-        # dropout
         x = self.dropout(x)
-        # FC 2 + batch norm
         x = self.bn2(self.fc2(x))
-
         return x
 
 ```
@@ -159,7 +129,6 @@ class pretrainingModel(nn.Module):
     def forward(self, input_id, mask):
         BERT_output = self.bert(input_id, mask)
         x = self.barlow_HEAD(BERT_output)
-
         return x
 ```
 
@@ -190,7 +159,6 @@ class trainingModel(nn.Module):
     def forward(self, input_id, mask):
         x = self.pretrainingModel(input_id, mask)
         x = self.ranking_HEAD(x)
-
         return x
 ```
 

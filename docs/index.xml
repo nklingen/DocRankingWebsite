@@ -18,21 +18,22 @@ The website is broken down as follows:
     </item>
     
     <item>
-      <title>Barlow</title>
-      <link>https://nklingen.github.io/DocRankingWebsite/docs/barlow/</link>
+      <title>Timeline</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://nklingen.github.io/DocRankingWebsite/docs/barlow/</guid>
-      <description>Barlow IntroBarlow Twins takes a batch of samples, applies noise to generate two distored versions, then passes both versions through two identical networks to get their corresponding embeddings. The Barlow loss is then computed on the embeddings, wherein the goal is to get the cross-correlation matrix between the embeddings as close as possible to the identity matrix. In this way, the embeddings of the two versions of the sample are encourraged to be similar, while redundancy between the components of the vectors is penalized.</description>
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</guid>
+      <description>TimelineThis section will be a general summary of our work and the evolution of the project. The project went through 4 overall phases in regards to the construction of the model.
+Exploratory Data Analysis (EDA) Document Ranking Model Barlow Twins  Exploratory Data AnalysisThe input data contains 4 main pieces of information. The title, the content, the type (questions or conversations) and answer id (the &amp;ldquo;true&amp;rdquo; label). Each piece of information should be analysed due to its importance.</description>
     </item>
     
     <item>
-      <title>BERT</title>
-      <link>https://nklingen.github.io/DocRankingWebsite/docs/bert/</link>
+      <title>Metrics</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/metrics/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://nklingen.github.io/DocRankingWebsite/docs/bert/</guid>
-      <description> BERTNat : Brief section on how BERT was implemented  </description>
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/metrics/</guid>
+      <description>Metrics# Computes top k accuracy def k_accuracy(scores, answer_ids, target_answer_ids, k): assert k &amp;gt;= 1 if k == 1: prediction_indices = torch.argmax(scores, dim=1) prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids) elif k &amp;gt; 1: prediction_indices = torch.topk(scores, k).indices prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids.unsqueeze(1)).any(1) # Computes top k average precision score def batch_map(relevance, k): top_k = relevance[:, :k] batch_size = top_k.size(0) pos = torch.arange(1, top_k.size(1) + 1, dtype=torch.float).unsqueeze(0).repeat(batch_size, 1).to(top_k.device) csum, num_ans = top_k.</description>
     </item>
     
     <item>
@@ -53,26 +54,6 @@ The website is broken down as follows:
     </item>
     
     <item>
-      <title>Metrics</title>
-      <link>https://nklingen.github.io/DocRankingWebsite/docs/metrics/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://nklingen.github.io/DocRankingWebsite/docs/metrics/</guid>
-      <description># Computes top k accuracy def k_accuracy(scores, answer_ids, target_answer_ids, k): assert k &amp;gt;= 1 if k == 1: prediction_indices = torch.argmax(scores, dim=1) prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids) elif k &amp;gt; 1: prediction_indices = torch.topk(scores, k).indices prediction_answer_ids = answer_ids[prediction_indices] return (prediction_answer_ids == target_answer_ids.unsqueeze(1)).any(1) # Computes top k average precision score def batch_map(relevance, k): top_k = relevance[:, :k] batch_size = top_k.size(0) pos = torch.arange(1, top_k.size(1) + 1, dtype=torch.float).unsqueeze(0).repeat(batch_size, 1).to(top_k.device) csum, num_ans = top_k.</description>
-    </item>
-    
-    <item>
-      <title>Timeline</title>
-      <link>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://nklingen.github.io/DocRankingWebsite/docs/timeline/</guid>
-      <description>TimelineThe project went through 4 overall phases in regards to the construction of the model.
- Fundamental construction Exploratory Data Analysis (EDA) Generic improvements Barlow Twins  We will skip the majority of the details and focus on the key takeaways of each phase leading up to the final version of our model. This section will thus work as a brief summary of our work.
-1. Fundamental constructionWithout going into much detail, the first part of the project was the implementation, and understandment, of BERT.</description>
-    </item>
-    
-    <item>
       <title>Discussion</title>
       <link>https://nklingen.github.io/DocRankingWebsite/docs/discussion/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -80,6 +61,16 @@ The website is broken down as follows:
       <guid>https://nklingen.github.io/DocRankingWebsite/docs/discussion/</guid>
       <description>DiscussionNat  We can see that Barlow Head accomplishes what it needs to do. (it works) but still that it breaks the downstream BERT task. We tried both frozen and unfrozen heads, and in both cases BERT is much worse off with the pretraining than with random initialized weights. We made sure it can&amp;rsquo;t be a scaling issue as everything is normalized.
 Take-away, BERT makes its own representations in the encoding space that work well for document ranking, and tweaking these seems to hurt the model.</description>
+    </item>
+    
+    <item>
+      <title>Train</title>
+      <link>https://nklingen.github.io/DocRankingWebsite/docs/train/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nklingen.github.io/DocRankingWebsite/docs/train/</guid>
+      <description>TrainWe also want to go into more detail in the training loop
+def train(model, model_answers, optimizer, criterion, data_loader, answer_loader, cls_dictionary): answer_tokens = torch.stack(list(cls_dictionary.values())).to(device) answer_ids = torch.tensor(list(cls_dictionary.keys())).to(device) # Metrics total_loss = 0 model.train() model_answers.train() answer_iterator = iter(answer_loader) for step, (data_batch) in enumerate(data_loader): # Keep updating the stale index (multiple updates for each ID each training step) answer_batch = next(answer_iterator) # clear previously calculated gradients optimizer.zero_grad() &amp;#39;&amp;#39;&amp;#39; Answer batch &amp;#39;&amp;#39;&amp;#39; answer_encoding, _, attention_mask, batch_ids = answer_batch new_answer_tokens = model_answers(answer_encoding, attention_mask) # Only update the relevant answer_tokens answer_tokens[(answer_ids == batch_ids.</description>
     </item>
     
   </channel>

@@ -3,6 +3,7 @@ weight: 5
 title: Metrics
 ---
 
+# Metrics 
 ```python
 # Computes top k accuracy
 def k_accuracy(scores, answer_ids, target_answer_ids, k):
