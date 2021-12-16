@@ -120,7 +120,46 @@ This is a simplified explanation for the instance where k=1. To compute the top 
 
 ### BERT with Dual Encoder
 
-A significant improvement was seen when implementing a dual encoder setup. The setup uses two different heads, one for the input data and one for the answers. During a training step the model will update part of the stale index. This updated stale index is used to calculate the scores of the input data. In such, we collect gradients from both the indexing of answers and the scoring of questions and conversations. There is still only calculate a single loss based on the scoring, but this loss is backpropagated into two seperate heads now. 
+We also want to go into more detail in the training loop
+
+> Using the Dual encoder, we want to set both models to train
+```python
+def  train(model, model_answers, optimizer, criterion, data_loader, answer_loader, cls_dictionary):
+
+    answer_tokens = torch.stack(list(cls_dictionary.values())).to(device)
+    answer_ids = torch.tensor(list(cls_dictionary.keys())).to(device)
+    total_loss = 0
+    model.train() # Query encodings
+    model_answers.train() # Answer DB encodings
+```
+> For each new batch from the queries, we first update the stale index over a batch of answers
+```python
+    answer_iterator = iter(answer_loader)
+    for  step, (data_batch) in  enumerate(data_loader):
+        answer_batch = next(answer_iterator)
+        optimizer.zero_grad()
+        answer_encoding, _, attention_mask, batch_ids = answer_batch
+        new_answer_tokens  = model_answers(answer_encoding, attention_mask)
+        answer_tokens[(answer_ids == batch_ids.unsqueeze(1)).nonzero()[:,1]] = new_answer_tokens
+```
+> We then pass the queries though their respective model to compute their encoding
+```python
+        input_encoding, _, attention_mask, target_answer_ids, question_type = data_batch
+        question_tokens = model(input_encoding, attention_mask)
+```
+> Finally we compute the score between the encodings and the answer database
+```python
+        scores = torch.matmul(question_tokens, answer_tokens.T)
+        target_answer_indices = (answer_ids == target_answer_ids.unsqueeze(1)).nonzero()[:, 1]
+        loss = criterion(scores, target_answer_indices) # compute loss 
+        loss.backward() # compute gradients
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1) # gradient clipping 
+        optimizer.step() # update weights
+        answer_tokens.detach_()
+        total_loss += loss.item()
+```
+
+A significant improvement was seen when implementing a dual encoder setup. The setup uses two different heads, one for the query data and one for the answers. During a training step the model will update part of the stale index, as seen in the code to the right. This updated stale index is used to score the given document for new incoming queries. In such, we collect gradients from both the indexing of answers and the scoring of questions and conversations (but later detach the model for the answers). We only calculate a single loss based on the scoring, and then backpropagate this loss onto the two seperate heads. 
 
 <aside class="notice">
 Move to results ??
