@@ -7,28 +7,10 @@ mathjax: true
 
 # Discussion
 
-<aside class="notice">
-Nat
-</aside>
+The main takeaway was that we could see that both the Document Ranking BERT and the Barlow models worked seperately. However, as soon as we coupled them, the model performed significantly worse than the original baseline. In fact, the starting accuracy was nearly 0, giving the same performance as randomly guessing. 
 
+We tried with both frozen and unfrozen parameters being passed from the pretraining model to the training model, but in neither case could we see any improvement. We also hypothesized that this may be because the scaling is off, meaning that the embeddings are in an entirely different scale during pre-training than during training. This led us to implement batch-normalization in all the models to see if there was any improvement. However, the model did not improve.
+ 
+Firstly, we consider the possibility that the two models might just not be compatible. Essentially, maybe pushing the embeddings together is simply an inherently poor idea based on a faulty assumption that questions and conversations with the same `answer id` should lie in the same latent space. This might be a very human intuition that we are imposing on the model, which may not necessarily translate into computer understanding. In fact, we do not even know how closely the two concepts of distance and relative ranking are linked. Potentially there is no correlation at all, and pushing the embeddings together is just an additional "hurdle" for the model to overcome. We propose that this be studied in Future Work, as an indicator for whether this project should be continued.
 
-We can see that Barlow Head accomplishes what it needs to do. (it works) but still that it breaks the downstream BERT task. We tried both frozen and unfrozen heads, and in both cases BERT is much worse off with the pretraining than with random initialized weights. We made sure it can't be a scaling issue as everything is normalized. 
-
-Take-away, BERT makes its own representations in the encoding space that work well for document ranking, and tweaking these seems to hurt the model. Maybe moving questions and conversations together is an idea that makes sense from a human perspective, but interferes with the models deeper understanding of the datatypes. We don't deeply understand how the model represents the data.
-
-Do queries with the same answer id even have the same question ?? sometimes yes sometimes no/ Potential issue: I have defect in product / I no longer want this product --> Product refund.
-
-
-is the CLS token sufficient ?
-
-Why does the training step continue to reduce cluser sizes after pretraining ?? Does this indicate that the model *does* so something good ? 
-
-<aside class="notice">
-Mikkel
-</aside>
-
-Seeing as project did not yield any improvements and instead significantly worsen it, the question to ask is why. Why does BERT and Barlow work seperately, but completely fail when coupled. 
-
-One of the reasons can be the assumption that questions and conversations with the same `answer id` should lie in the same latent space. This might be a very human intuition that does not necessarily translate into computer understanding. Moreover, our decision to only include the CLS token might also influence this. The CLS token is the classification token and BERT's understanding of classification might differ from humans. Even though a topic may be the same for a question and a conversation, the language in short and concise text (questions) might put it into a different classification than noisy and long text (conversations).
-
-Secondly, we notice that the pretrained model is more or less broken for the ranking task. The model totally fails and has an accuracy slightly above 0%, much less than BERT achieves. This hints to the fact that there might be a fundamental problem, not just that Barlow might be a wrong assumption. Raffle.ai has had previous experience with BERT's apparent resistance to pretraining tasks. The underlying problem with pretraining might be that it interfers too much with the fundamental understandment of language by BERT. Additionally, there might be a need for special integration, rather than a trained head put ontop of BERT. However, these considerations requires much energy to investigate and we leave this for the future work. 
+We notice that the pretrained model is more or less broken for the ranking task. This hints to the fact that there might be a fundamental problem in the integration between the two models. Raffle.ai has had previous experience with BERT's apparent resistance to pretraining tasks. In other words, there might be a need for a more careful integration, rather than simply passing forward the trained BARLOW head put ontop of BERT. Given our time constraints, these considerations were beyond the scope of this project. We propose this for the future work.

@@ -104,9 +104,9 @@ For clarity, question and conversations embeddings will be called "queries".
 The model was implemented as follows:
 
 1. Compute the answer Database
-We passed the answers through a BERT model with a head to get a database of answer encodings. 
+    * We passed the answers through a BERT model with a head to get a database of answer encodings. 
 2. Compute the query embeddings
-Next, we passed the questions and conversations through the same BERT model with the same head to get their encodings. 
+    * Next, we passed the questions and conversations through the same BERT model with the same head to get their encodings. 
 
 ![BERT 1]({{< baseurl >}}/images/BERT1.png)
 
@@ -125,8 +125,6 @@ We will also discuss some design choices in implementing BERT. Namely, the two k
 * The second decision was using only the CLS tokens. Briefly, the CLS token is first column of the BERT output, typically used for classification tasks. The CLS token can be said to encapsulate all the information of the input, to give a sort of general summary. We deemed this token most important for ranking. Thus, given the same speed and memory constraints, we chose to only use the CLS token and discard the rest of the BERT output. However, as we will discuss later, this can also come with consequences. 
 
 ### BERT with Dual Encoder
-
-We also want to go into more detail in the training loop
 
 > Using the Dual encoder, we want to set both models to train
 ```python
@@ -165,7 +163,9 @@ def  train(model, model_answers, optimizer, criterion, data_loader, answer_loade
         total_loss += loss.item()
 ```
 
-A significant improvement was seen when implementing a dual encoder setup. The setup uses two different heads, one for the query data and one for the answers. During a training step the model will update part of the stale index, as seen in the code to the right. This updated stale index is used to score the given document for new incoming queries. In such, we collect gradients from both the indexing of answers and the scoring of questions and conversations (but later detach the model for the answers). We only calculate a single loss based on the scoring, and then backpropagate this loss onto the two seperate heads. 
+On a tip from Raffle, we implemented a Dual Encoder, wherein the create two heads, one for the query data and one for the answers. Thus the two inputs are no longer encoded in the same model, and each encoder can specialise on its respective input. 
+
+During a training step the model will update part of the stale index, as seen in the code to the right. This updated stale index is used to score the given document for new incoming queries. In such, we collect gradients from both the indexing of answers and the scoring of questions and conversations (but later detach the model for the answers). We only calculate a single loss based on the scoring, and then backpropagate this loss onto the two seperate heads. 
 
 ![BERT 3]({{< baseurl >}}/images/BERT3.png)
 
@@ -193,7 +193,7 @@ Moreover, 'Weights & Biases' tells us the importance and correlation of each par
 
 ![Parameter importance]({{< baseurl >}}/images/param_importance.png)
 
-## Barlow Twins
+## Pretraining with Barlow Twins
 
 At this stage, we had a very basic, working Document Ranking Model. We now wanted to try out our hypothesis, that pushing together similar question and conversation encodings might improve the model.
 
@@ -221,7 +221,7 @@ Having now computed the correlation matrix, we want to encourage it to resemble 
 ![Barlow 3]({{< baseurl >}}/images/Barlow_3.png)
 
 
-### Implementation
+### Code
 
 ```python
 
@@ -262,3 +262,14 @@ Then it takes all datapoints from the smaller set, and samples from the larger s
 
 Lastly, the `invariance_term` and `redundancy_term` are computed using two helper functions, `diagonal` and `off_diagonal` that return flattened versions of all elements in the diagonal or off-diagonal. The two terms are implemented exactly as described in [Theory](#theory)
 
+### Implementation
+
+**Pre-training with inherited head**
+
+We initially pretrainined with a Barlow Head and then passed the head direction to the Dual-Encoder Document Ranking Model. We found that while we saw that the shared head was converging very smoothly for the pre-training, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly. 
+
+**Pre-training with frozen head**
+
+Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the weights in the head were quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model is forced to rank documents *without unlearning* the embeddings from the pretraining.
+
+The architecture for Pre-training with frozen head is shown below.

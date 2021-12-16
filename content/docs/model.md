@@ -19,11 +19,7 @@ title: Model
 > 2. <p style="color:dodgerblue"> Ranking Head</p>
 
 
-To re-iterated, pre-training a Barlow head and then inheriting the head directly in the training loop led to poor results. While we saw that the shared head was converging very smoothly for the initial pre-training with Barlow Loss, and showed excellent results in pushing together the embeddings, it had very poor one-shot performance in Document Ranking, and did not converge more quickly.Consequently, we hypothesized that the model was not sufficiently complex to capture both the Barlow objective (push together question and conversation embeddings) and the Ranking objective (score highly on document ranking). That is, after training for the Barlow objective, the head was quickly overwritten when it was tasked with optimising for the Ranking objective. To counteract this (and thus get a true evaluation of applying Barlow Twins as a pretraining step), we decided to freeze the Barlow Twins head during training. Thus, the model learns to rank documents with a new head *without unlearning* the embeddings from the pretraining.
-
-The following section will discuss how the pre-training and training models are constructed. 
-
-
+The following section will discuss how the pre-training (with frozen head) and training models are constructed. 
 
 ## BERT Base
 
