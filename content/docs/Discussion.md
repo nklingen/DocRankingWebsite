@@ -12,7 +12,7 @@ Our main challange for this project was to implement Barlow on a new domain, and
 
 ## Barlow with Document Ranking BERT
 
-Moreover, we created a simplified, working model of Raffle's Document Ranking BERT. However, as soon as we coupled our barseline with the Barlow Pre-training, the model performed significantly more poorly than the original baseline. In fact, the starting accuracy was nearly 0, giving the same performance as randomly guessing. 
+We created a simplified, working model of Raffle's Document Ranking BERT. However, as soon as we coupled our baseline with the Barlow Pre-training, the model performed significantly worse than the original baseline. In fact, the starting accuracy was nearly 0, giving the same performance as randomly guessing. 
 
 We tried with both frozen and unfrozen parameters being passed from the pretraining model to the training model, but in neither case could we see any improvement. We also hypothesized that this may be because the scaling is off, meaning that the embeddings are in an entirely different scale during pre-training than during training. This led us to implement batch-normalization in all the models to see if there was any improvement. However, the model did not improve.
 

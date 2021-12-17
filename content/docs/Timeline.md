@@ -21,7 +21,7 @@ With some qualitative analysis, we investigated the assumption that input data w
 The datasets (train and validation) are heavily skewed, having about 10 times the amount of conversations as opposed to questions. By including the generated questions, we get to a 2/3 split of conversations and questions, giving a more balanced dataset. Furthermore, we investigated casting short conversations as questions, as some conversations can be as short as a single sentence, esssentially making them a question. We chose to cast conversations with less than 100 characters into questions, making an almost perfectly balanced dataset. The balanced dataset is also crucial for the Barlow implementation later. 
 
 ### PCA
-In order to investigate whether questions and conversations, that has the same answer id, lie closely to eachother in latent space, we applied PCA to reduce the dimensionality down to 2D in order to visualize it. There was two main takeaways from the PCA plots. Firstly, there didn't appear to be distinct groupings based on answer ids and the embeddings was scattered in the latent space. There were certain areas with higher density of the same answer ids, but nothing that indicated seperation. Secondly, questions and conversations were not seperated and laid ontop of eachother. Howewer, conversatons were spread over the entire latent space, but questions appeared to be more clustered in certain areas. This might mean that BERT somewhat distinguishes between conversations and questions at a certain level.
+In order to investigate whether questions and conversations, that has the same answer id, lie closely to eachother in latent space, we applied PCA to reduce the dimensionality down to 2D in order to visualize it. There was two main takeaways from the PCA plots. Firstly, there did not appear to be distinct groupings based on answer ids and the embeddings was scattered in the latent space. There were certain areas with higher density of the same answer ids, but nothing that indicated seperation. Secondly, questions and conversations were not seperated and laid ontop of eachother. Howewer, conversatons were spread over the entire latent space, but questions appeared to be more clustered in certain areas. This might mean that BERT somewhat distinguishes between conversations and questions at a certain level.
 
 ## Document Ranking Model
 
@@ -78,7 +78,7 @@ def TFIDF_standard(data):
 
 As the input to BERT has to be of limited size due to time and memory constraints, we preprocess the input, to remove noise in the data and feed BERT with only the most useful information. 
 
-To do so, We decided to include the sentences with the highest importance according to relative sentence TF-IDF score. We computed this in the following way.
+To do so, we decided to include the sentences with the highest importance according to relative sentence TF-IDF score. We computed this in the following way:
 
 
 1. Compute the TF-IDF score for each word in the corpus
@@ -91,9 +91,9 @@ To do so, We decided to include the sentences with the highest importance accord
 
 The entire code is demonstrated on the right.
 
-Additionally, we tried utilizing the sections.json file, and instead return an equal number of top TF-IDF scored sentences *per section*, however this implementation did not yield any significant improvements. 
+Additionally, we tried utilizing the sections.json file, and instead return an equal number of top TF-IDF scored sentences *per section*, however this implementation did not yield any significant improvements. In results, we will show the performance of this version of TF-IDF in comparison to the vanilla version.
 
-Moreover, we also attempted to increase the amount of tokens from 128 to 258 and 512; this did not yield any significant improvements. Instead it merely increased runtime lineraly in proportion to the number of tokens. (Twice the amount of data took roughly twice the amount of time).
+Moreover, we also attempted to increase the amount of tokens from 128 to 258 and 512; this did not yield any significant improvements. Instead it merely increased runtime lineraly in proportion to the number of tokens. (Twice the amount of data took roughly twice the amount of time). This version of TF-IDF will also be discussed in the results.
 
 ### BERT with one head
 
@@ -123,6 +123,27 @@ We will also discuss some design choices in implementing BERT. Namely, the two k
 
 * The decision to freeze BERT parameters was primarily taken to increase speed and avoid running into issues of memory constraint, which was crutial for us given this was a short-term research project and we had GPU resource constraints. We knew this would entail a decrease in accuracy. Unfreezing BERT and adapting the model for all experiments would have likely increased performance. 
 * The second decision was using only the CLS tokens. Briefly, the CLS token is first column of the BERT output, typically used for classification tasks. The CLS token can be said to encapsulate all the information of the input, to give a sort of general summary. We deemed this token most important for ranking. Thus, given the same speed and memory constraints, we chose to only use the CLS token and discard the rest of the BERT output. However, as we will discuss later, this can also come with consequences. 
+
+We apply some of the common deep learning improvements, such as gradient clipping, and l2 regularization, and saw immediate improvements. These techniques help us stabilize the learning and prevent overfitting. 
+
+Later, we also exchanged the gradient clipping after the model terminates with batch normalization in between the blocks of the model. 
+
+Having tried variations of pre-processing and manually updates to the model, we then decided to to fix a set of parameters for our model for all following experiments and thus "freeze" our model. We tune with respect to the validation loss over 4 parameters: dropout rate, learning rate, batch size and weight decay. We utilized 'Weights & Biases' automatic hyperparameter tuning (sweeps) and chose to use Bayes optimisation to optimise the search. 
+
+As the graphics are a bit small, the entire Hyperparameter Tuning Sweep can be found [here](https://wandb.ai/nklingen/BERT_Question_Answering/reports/Hyperparameter-Tuning-Baseline--VmlldzoxMTQ0OTE5).
+
+![Overview of all the runs]({{< baseurl >}}/images/sweep.jpg)
+
+We fix the `max_length=128`, i.e. the amount of tokens fed to BERT, and the max number of `epochs=50`. The sweep finds the following parameters:
+
+`batch size=50`
+`dropout=0.11`
+`learning rate=1.4e-4`
+`weight decay=9.3e-4`
+
+Moreover, 'Weights & Biases' tells us the importance and correlation of each parameter. It clearly shows the learning rate being the most influential, which is expected due to its large impact on training.
+
+![Parameter importance]({{< baseurl >}}/images/param_importance.png)
 
 ### BERT with Dual Encoder
 
@@ -163,35 +184,12 @@ def  train(model, model_answers, optimizer, criterion, data_loader, answer_loade
         total_loss += loss.item()
 ```
 
-On a tip from Raffle, we implemented a Dual Encoder, wherein the create two heads, one for the query data and one for the answers. Thus the two inputs are no longer encoded in the same model, and each encoder can specialise on its respective input. 
+On a tip from Raffle, we next implemented a Dual Encoder, wherein the create two heads - one for the query data and one for the answers. Thus the two inputs are no longer encoded in the same model, and each encoder can specialise on its respective input. 
 
 During a training step the model will update part of the stale index, as seen in the code to the right. This updated stale index is used to score the given document for new incoming queries. In such, we collect gradients from both the indexing of answers and the scoring of questions and conversations (but later detach the model for the answers). We only calculate a single loss based on the scoring, and then backpropagate this loss onto the two seperate heads. 
 
 ![BERT 3]({{< baseurl >}}/images/BERT3.png)
 
-### Gradient clipping, L2 regularization & batch normalization
-We apply some of the common deep learning improvements, such as gradient clipping, and l2 regularization, and saw immediate improvements. These techniques help us stabilize the learning and prevent overfitting. 
-
-Later, we also exchanged the gradient clipping after the model terminates with batch normalization in between the blocks of the model. 
-
-### Hyperparameter Tuning
-
-As the graphics are a bit small, the entire Hyperparameter Tuning Sweep can be found [here](https://wandb.ai/nklingen/BERT_Question_Answering/reports/Hyperparameter-Tuning-Baseline--VmlldzoxMTQ0OTE5).
-
-In order to fix a model for our expeirments we found a set of parameters using hyperparameter tuning. We tune with respect to the validation loss over 4 parameters: dropout rate, learning rate, batch size and weight decay. We utilized 'Weights & Biases' automatic hyperparameter tuning (sweeps) and chose to us Bayes optimisation to optimise the search. We do the sweep on the *Dual Encoder* model described above.
-
-![Overview of all the runs]({{< baseurl >}}/images/sweep.jpg)
-
-We fix the `max_length=128`, i.e. the amount of tokens fed to BERT, and the max number of `epochs=50`. The sweep finds the following parameters:
-
-`batch size=50`
-`dropout=0.11`
-`learning rate=1.4e-4`
-`weight decay=9.3e-4`
-
-Moreover, 'Weights & Biases' tells us the importance and correlation of each parameter. It clearly shows the learning rate being the most influential, which is expected due to its large impact on training.
-
-![Parameter importance]({{< baseurl >}}/images/param_importance.png)
 
 ## Pretraining with Barlow Twins
 

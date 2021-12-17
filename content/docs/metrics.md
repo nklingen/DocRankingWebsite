@@ -32,7 +32,7 @@ def batch_map(relevance, k):
 We log 3 types of metrics: loss, accuracy and average precision (MAP). 
 
 <aside class="notice">
-When we say top *k* we measure a success criteria as each instance where the correct answer id lies in the *k* top scores. Whereas accuracy is blind to how high the relative score was, as long as it still falls in the top k, MAP will still (slightly) penalize correct answers that weren't ranked highly enough. 
+When we say top *k* we measure a success criteria as each instance where the correct answer id lies in the *k* top scores. Whereas accuracy is blind to how high the relative score was, as long as it still falls in the top k, MAP will still (slightly) penalize correct answers that were not ranked highly enough. 
 </aside>
 
 
