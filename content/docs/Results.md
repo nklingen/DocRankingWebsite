@@ -109,3 +109,6 @@ From this we would expect that the zero-shot would have similar performance to t
 
 ![Baseline vs. pretrained baseline]({{< baseurl >}}/images/pretraining.png)
  
+![Train Loss]({{< baseurl >}}/images/TrainLoss.png)
+
+![Validation Loss]({{< baseurl >}}/images/ValidationLoss.png)
