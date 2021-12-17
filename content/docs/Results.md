@@ -105,10 +105,14 @@ We very oddly find that the average distance to answer is nearly the same as the
 
 From this we would expect that the zero-shot would have similar performance to the baseline, and that the pre-trained baseline would outperform the baselne. However, this was very far from the results we saw.
 
-> We see that the pretrained baseline has completely collapsed at the start of training. The pretrained baseline, and the zero-shot at step 0, is totally unequipped for the document ranking task.  Essentially, on running different variations of the model, the starting point is  very poor and the model does not converge more quickly.  While we only depicted top3 accuracy in the plot, the rest of the metrics look equally poor.
+> We see that the pretrained baseline has completely collapsed at the start of training. The pretrained baseline, and the zero-shot at step 0, is totally unequipped for the document ranking task.  Essentially, on running different variations of the model, the starting point is  very poor. Moreover the model does not converge more quickly.
 
 ![Baseline vs. pretrained baseline]({{< baseurl >}}/images/pretraining.png)
  
 ![Train Loss]({{< baseurl >}}/images/TrainLoss.png)
 
-![Validation Loss]({{< baseurl >}}/images/ValidationLoss.png)
+If we remove the zero-shot:
+
+![Barlow Train Loss]({{< baseurl >}}/images/barlow_train_loss.png)
+
+![Barlow Val Loss]({{< baseurl >}}/images/barlow_val_loss.png)

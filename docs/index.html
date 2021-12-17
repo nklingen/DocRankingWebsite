@@ -944,11 +944,13 @@ The average distance centroid is a distance metric in multiple dimensions, which
 <p>We very oddly find that the average distance to answer is nearly the same as the baseline, without ever having seen the true answer. Moreover, the pretrained baseline also has a 50% reduction compared to the baseline. Overall, it looks like Barlow accomplishes its task of pushing both questions and conversation together, which in turn makes these closer to the answer they point to. In the discussion we will interpret this further.</p>
 <p>From this we would expect that the zero-shot would have similar performance to the baseline, and that the pre-trained baseline would outperform the baselne. However, this was very far from the results we saw.</p>
 <blockquote>
-<p>We see that the pretrained baseline has completely collapsed at the start of training. The pretrained baseline, and the zero-shot at step 0, is totally unequipped for the document ranking task.  Essentially, on running different variations of the model, the starting point is  very poor and the model does not converge more quickly.  While we only depicted top3 accuracy in the plot, the rest of the metrics look equally poor.</p>
+<p>We see that the pretrained baseline has completely collapsed at the start of training. The pretrained baseline, and the zero-shot at step 0, is totally unequipped for the document ranking task.  Essentially, on running different variations of the model, the starting point is  very poor. Moreover the model does not converge more quickly.</p>
 </blockquote>
 <p><img src="https://nklingen.github.io/DocRankingWebsite//images/pretraining.png" alt="Baseline vs. pretrained baseline"></p>
 <p><img src="https://nklingen.github.io/DocRankingWebsite//images/TrainLoss.png" alt="Train Loss"></p>
-<p><img src="https://nklingen.github.io/DocRankingWebsite//images/ValidationLoss.png" alt="Validation Loss"></p>
+<p>If we remove the zero-shot:</p>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/barlow_train_loss.png" alt="Barlow Train Loss"></p>
+<p><img src="https://nklingen.github.io/DocRankingWebsite//images/barlow_val_loss.png" alt="Barlow Val Loss"></p>
 
   
     
